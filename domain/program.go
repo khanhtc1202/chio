@@ -1,21 +1,20 @@
 package domain
 
-type Program interface {
-	GetModuleList() Modules
+type Program struct {
+	RootPath string
 }
 
-type GolangProgram struct {
+type Module struct {
+	SourceFiles []*SourceFile
+	Language    LanguageType
 }
 
-func (*GolangProgram) GetModuleList() Modules {
-	// TODO
-	return nil
+type SourceFile struct {
+	Path string
 }
 
-type PythonProgram struct {
-}
+type Modules []*Module
 
-func (*PythonProgram) GetModuleList() Modules {
-	// TODO
-	return nil
+func EmptyModuleList() *Modules {
+	return &Modules{}
 }

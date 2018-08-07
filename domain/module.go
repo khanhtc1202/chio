@@ -1,23 +1,18 @@
 package domain
 
-type Module interface {
+type ModuleProperties interface {
 	CountFanInDepend() int
 	CountFanOutDepend() int
 	CountAbstractMember() int
 	CountConcreteMember() int
 }
 
-// TODO implement count method
-type DirLevelModule struct {
-	Module
+// TODO implement for golang
+type GolangModule struct {
+	ModuleProperties
 }
 
-// TODO implement count method
-type FileLevelModule struct {
-	Module
-}
-
-// TODO implement count method
-type RecursionDirLevelModule struct {
-	Module
+// TODO implement for python
+type PythonModule struct {
+	ModuleProperties
 }
