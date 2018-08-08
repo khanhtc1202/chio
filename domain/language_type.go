@@ -26,3 +26,20 @@ func (l LanguageType) String() string {
 		return "Unknown"
 	}
 }
+
+func (l LanguageType) Extension() string {
+	switch l {
+	case GO:
+		return ".go"
+	case PYTHON:
+		return ".py"
+	case JAVA:
+		return ".java"
+	case RUBY:
+		return ".rb"
+	case NODEJS:
+		return ".js"
+	default:
+		return "Unknown"
+	}
+}
