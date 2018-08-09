@@ -20,19 +20,18 @@ func NewModuleFactory() *ModuleFactory {
 
 func (m *ModuleFactory) LoadFirstDirLevel(rootPath string, language LanguageType) (*Modules, error) {
 	modules := EmptyModuleList()
-	// TODO impl for first dir level load strategy
 	baseDirs, err := m.buildBaseDirs(rootPath)
 	if err != nil {
 		return modules, err
 	}
 
 	for _, dir := range baseDirs {
-		modulesDir, err := m.LoadFileLevel(dir, language)
+		module, err := m.loadFilesInDir(dir, language)
 		if err != nil {
 			return modules, err
 		}
-		if len((*modulesDir)[0].SourceFiles) > 0 {
-			modules.Add((*modulesDir)[0])
+		if len(module.SourceFiles) > 0 {
+			modules.Add(module)
 		}
 	}
 	return modules, nil
@@ -40,17 +39,11 @@ func (m *ModuleFactory) LoadFirstDirLevel(rootPath string, language LanguageType
 
 func (m *ModuleFactory) LoadFileLevel(rootPath string, language LanguageType) (*Modules, error) {
 	modules := EmptyModuleList()
-	module := NewModule(language)
+	module, err := m.loadFilesInDir(rootPath, language)
+	if err != nil {
+		return nil, err
+	}
 	modules.Add(module)
-	filepath.Walk(rootPath, func(path string, f os.FileInfo, _ error) error {
-		if !f.IsDir() {
-			r, err := regexp.MatchString(language.Extension(), f.Name())
-			if err == nil && r {
-				module.AddSourceFile(NewSourceFile(f.Name()))
-			}
-		}
-		return nil
-	})
 	return modules, nil
 }
 
@@ -58,6 +51,20 @@ func (m *ModuleFactory) LoadRecursionDirLevel(rootPath string, language Language
 	modules := EmptyModuleList()
 	// TODO impl for first dir level load strategy
 	return modules, nil
+}
+
+func (m *ModuleFactory) loadFilesInDir(dirPath string, language LanguageType) (*Module, error) {
+	module := NewModule(language)
+	filepath.Walk(dirPath, func(path string, f os.FileInfo, _ error) error {
+		if !f.IsDir() {
+			r, err := regexp.MatchString(language.Extension(), f.Name())
+			if err == nil && r {
+				module.AddSourceFile(NewSourceFile(path))
+			}
+		}
+		return nil
+	})
+	return module, nil
 }
 
 func (m *ModuleFactory) buildBaseDirs(rootPath string) ([]string, error) {

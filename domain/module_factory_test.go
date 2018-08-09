@@ -49,4 +49,8 @@ func TestModuleFactory_LoadRecursionDirLevel(t *testing.T) {
 	if len(*modules) == 0 {
 		t.Fatal("Count false in load module recursion dir level")
 	}
+	for _, module := range *modules {
+		files := module.GetSourceFilesPath()
+		fmt.Println(files)
+	}
 }
