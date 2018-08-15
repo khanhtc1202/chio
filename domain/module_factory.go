@@ -18,25 +18,6 @@ func NewModuleFactory() *ModuleFactory {
 	return &ModuleFactory{}
 }
 
-func (m *ModuleFactory) LoadFirstDirLevel(rootPath string, language LanguageType) (*Modules, error) {
-	modules := EmptyModuleList()
-	baseDirs, err := m.buildBaseDirs(rootPath)
-	if err != nil {
-		return modules, err
-	}
-
-	for _, dir := range baseDirs {
-		module, err := m.loadFilesInDir(dir, language)
-		if err != nil {
-			return modules, err
-		}
-		if len(module.SourceFiles) > 0 {
-			modules.Add(module)
-		}
-	}
-	return modules, nil
-}
-
 func (m *ModuleFactory) LoadFileLevel(rootPath string, language LanguageType) (*Modules, error) {
 	modules := EmptyModuleList()
 	module, err := m.loadFilesInDir(rootPath, language)
@@ -44,12 +25,6 @@ func (m *ModuleFactory) LoadFileLevel(rootPath string, language LanguageType) (*
 		return nil, err
 	}
 	modules.Add(module)
-	return modules, nil
-}
-
-func (m *ModuleFactory) LoadRecursionDirLevel(rootPath string, language LanguageType) (*Modules, error) {
-	modules := EmptyModuleList()
-	// TODO impl for first dir level load strategy
 	return modules, nil
 }
 

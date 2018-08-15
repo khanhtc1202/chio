@@ -24,33 +24,3 @@ func TestModuleFactory_LoadFileLevel(t *testing.T) {
 		fmt.Println(files)
 	}
 }
-
-func TestModuleFactory_LoadFirstDirLevel(t *testing.T) {
-	moduleFac := domain.NewModuleFactory()
-	modules, err := moduleFac.LoadFirstDirLevel(rootPath, domain.GO)
-	if err != nil {
-		t.Fatal("Error on load file by first dir level test:", err)
-	}
-	if len(*modules) == 0 {
-		t.Fatal("Count false in load module first dir level")
-	}
-	for _, module := range *modules {
-		files := module.GetSourceFilesPath()
-		fmt.Println(files)
-	}
-}
-
-func TestModuleFactory_LoadRecursionDirLevel(t *testing.T) {
-	moduleFac := domain.NewModuleFactory()
-	modules, err := moduleFac.LoadRecursionDirLevel(rootPath, domain.GO)
-	if err != nil {
-		t.Fatal("Error on load file recursion dir level test:", err)
-	}
-	if len(*modules) == 0 {
-		t.Fatal("Count false in load module recursion dir level")
-	}
-	for _, module := range *modules {
-		files := module.GetSourceFilesPath()
-		fmt.Println(files)
-	}
-}
