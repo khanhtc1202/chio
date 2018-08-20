@@ -1,10 +1,10 @@
 package domain
 
 type ModuleProperties interface {
-	CountFanInDepend() int
-	CountFanOutDepend() int
-	CountAbstractMember() int
-	CountConcreteMember() int
+	GetFanInDepend() int
+	GetFanOutDepend() int
+	GetAbstractMember() int
+	GetConcreteMember() int
 }
 
 // TODO implement for golang
