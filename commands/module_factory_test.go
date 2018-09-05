@@ -1,17 +1,18 @@
-package domain_test
+package commands_test
 
 import (
 	"testing"
 
 	"fmt"
 
+	"github.com/khanhtc1202/chio/commands"
 	"github.com/khanhtc1202/chio/domain"
 )
 
 var rootPath = "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
 
 func TestModuleFactory_LoadFileLevel(t *testing.T) {
-	moduleFac := domain.NewModuleFactory()
+	moduleFac := commands.NewModuleFactory()
 	modules, err := moduleFac.LoadFileLevel(rootPath, domain.GO)
 	if err != nil {
 		t.Fatal("Error on load file level test:", err)
