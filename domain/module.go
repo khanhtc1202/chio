@@ -7,12 +7,27 @@ type ModuleProperties interface {
 	GetConcreteMember() int
 }
 
-// TODO implement for golang
-type GolangModule struct {
+type Module struct {
 	ModuleProperties
+	SourceFiles []*SourceFile
+	Language    LanguageType
 }
 
-// TODO implement for python
-type PythonModule struct {
-	ModuleProperties
+func NewModule(language LanguageType) *Module {
+	return &Module{
+		SourceFiles: []*SourceFile{},
+		Language:    language,
+	}
+}
+
+func (m *Module) AddSourceFile(file *SourceFile) {
+	m.SourceFiles = append(m.SourceFiles, file)
+}
+
+func (m *Module) GetSourceFilesPath() []string {
+	var filesPath []string
+	for _, path := range m.SourceFiles {
+		filesPath = append(filesPath, path.Path)
+	}
+	return filesPath
 }

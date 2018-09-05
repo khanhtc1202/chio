@@ -15,7 +15,10 @@ func NewModuleFactory() *ModuleFactory {
 	return &ModuleFactory{}
 }
 
-func (m *ModuleFactory) LoadFileLevel(rootPath string, language domain.LanguageType) (*domain.Modules, error) {
+func (m *ModuleFactory) FileAsModule(
+	rootPath string,
+	language domain.LanguageType,
+) (*domain.Modules, error) {
 	modules := domain.EmptyModuleList()
 	module, err := m.loadFilesInDir(rootPath, language)
 	if err != nil {
@@ -25,7 +28,10 @@ func (m *ModuleFactory) LoadFileLevel(rootPath string, language domain.LanguageT
 	return modules, nil
 }
 
-func (m *ModuleFactory) loadFilesInDir(dirPath string, language domain.LanguageType) (*domain.Module, error) {
+func (m *ModuleFactory) loadFilesInDir(
+	dirPath string,
+	language domain.LanguageType,
+) (*domain.Module, error) {
 	module := domain.NewModule(language)
 	filepath.Walk(dirPath, func(path string, f os.FileInfo, _ error) error {
 		if !f.IsDir() {

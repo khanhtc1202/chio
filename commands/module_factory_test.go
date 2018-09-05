@@ -13,7 +13,7 @@ var rootPath = "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
 
 func TestModuleFactory_LoadFileLevel(t *testing.T) {
 	moduleFac := commands.NewModuleFactory()
-	modules, err := moduleFac.LoadFileLevel(rootPath, domain.GO)
+	modules, err := moduleFac.FileAsModule(rootPath, domain.GO)
 	if err != nil {
 		t.Fatal("Error on load file level test:", err)
 	}
