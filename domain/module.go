@@ -7,6 +7,10 @@ type ModuleProperties interface {
 	GetConcreteMember() int
 }
 
+func FactoryModuleProperties(lang LanguageType) ModuleProperties {
+	return nil
+}
+
 type Module struct {
 	ModuleProperties
 	SourceFiles []*SourceFile
@@ -15,8 +19,9 @@ type Module struct {
 
 func NewModule(language LanguageType) *Module {
 	return &Module{
-		SourceFiles: []*SourceFile{},
-		Language:    language,
+		Language:         language,
+		SourceFiles:      []*SourceFile{},
+		ModuleProperties: FactoryModuleProperties(language),
 	}
 }
 
