@@ -1,6 +1,9 @@
 package domain
 
-import "io/ioutil"
+import (
+	"io/ioutil"
+	"os"
+)
 
 type SourceFile struct {
 	Path string
@@ -12,11 +15,11 @@ func NewSourceFile(path string) *SourceFile {
 	}
 }
 
-func (s *SourceFile) Content() string {
+func (s *SourceFile) Content() (string, error) {
 	b, err := ioutil.ReadFile(s.Path)
 	if err != nil {
-		// TODO return on err load content file
-		return ""
+		// panic when error on load content
+		os.Exit(1)
 	}
-	return string(b)
+	return string(b), nil
 }
