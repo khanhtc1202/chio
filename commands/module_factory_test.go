@@ -1,9 +1,8 @@
 package commands_test
 
 import (
-	"testing"
-
 	"fmt"
+	"testing"
 
 	"github.com/khanhtc1202/chio/commands"
 	"github.com/khanhtc1202/chio/domain"

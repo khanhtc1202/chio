@@ -11,6 +11,16 @@ func FactoryModuleProperties(lang LanguageType) ModuleProperties {
 	return nil
 }
 
+type Modules []*Module
+
+func EmptyModuleList() *Modules {
+	return &Modules{}
+}
+
+func (m *Modules) Add(module *Module) {
+	*m = append(*m, module)
+}
+
 type Module struct {
 	ModuleProperties
 	SourceFiles []*SourceFile
