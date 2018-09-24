@@ -1,26 +1,5 @@
 package domain
 
-type ModuleProperties interface {
-	GetFanInDepend() int
-	GetFanOutDepend() int
-	GetAbstractMember() int
-	GetConcreteMember() int
-}
-
-func FactoryModuleProperties(lang LanguageType) ModuleProperties {
-	return nil
-}
-
-type Modules []*Module
-
-func EmptyModuleList() *Modules {
-	return &Modules{}
-}
-
-func (m *Modules) Add(module *Module) {
-	*m = append(*m, module)
-}
-
 type Module struct {
 	ModuleProperties
 	SourceFiles []*SourceFile
@@ -45,4 +24,15 @@ func (m *Module) GetSourceFilesPath() []string {
 		filesPath = append(filesPath, path.Path)
 	}
 	return filesPath
+}
+
+// modules type
+type Modules map[string]*Module
+
+func EmptyModuleList() *Modules {
+	return &Modules{}
+}
+
+func (m *Modules) Add(rootPath string, module *Module) {
+	(*m)[rootPath] = module
 }

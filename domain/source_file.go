@@ -3,6 +3,7 @@ package domain
 import (
 	"io/ioutil"
 	"os"
+	"path"
 )
 
 type SourceFile struct {
@@ -13,6 +14,11 @@ func NewSourceFile(path string) *SourceFile {
 	return &SourceFile{
 		Path: path,
 	}
+}
+
+func (s *SourceFile) GetDirPath() string {
+	dir, _ := path.Split(s.Path)
+	return dir
 }
 
 func (s *SourceFile) Content() (string, error) {
