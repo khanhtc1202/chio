@@ -9,7 +9,7 @@ import (
 
 var rootPath = "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
 
-func TestModuleFactory_LoadFileLevel(t *testing.T) {
+func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
 	moduleFac := NewModuleFactory()
 	modules, err := moduleFac.DirectoryAsModule(rootPath, domain.GO)
 	if err != nil {
