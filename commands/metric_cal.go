@@ -1,16 +1,20 @@
-package domain
+package commands
 
-import "math"
+import (
+	"math"
+
+	"github.com/khanhtc1202/chio/entity"
+)
 
 type MetricCalculator struct{}
 
-func (*MetricCalculator) Instability(module Module) float64 {
+func (*MetricCalculator) Instability(module entity.Module) float64 {
 	fOut := module.GetFanOutDepend()
 	fIn := module.GetFanInDepend()
 	return float64(fOut) / float64(fOut+fIn)
 }
 
-func (*MetricCalculator) Abstractness(module Module) float64 {
+func (*MetricCalculator) Abstractness(module entity.Module) float64 {
 	abs := module.GetAbstractMember()
 	con := module.GetConcreteMember()
 	return float64(abs) / float64(abs+con)

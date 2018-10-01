@@ -1,4 +1,4 @@
-package domain
+package entity
 
 type ModuleProperties interface {
 	GetFanInDepend() int

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/khanhtc1202/chio/domain"
+	"github.com/khanhtc1202/chio/entity"
 )
 
 type ModuleFactory struct {
@@ -17,16 +17,16 @@ func NewModuleFactory() *ModuleFactory {
 
 func (m *ModuleFactory) DirectoryAsModule(
 	rootPath string,
-	language domain.LanguageType,
-) (*domain.Modules, error) {
-	modules := domain.EmptyModuleList()
+	language entity.LanguageType,
+) (*entity.Modules, error) {
+	modules := entity.EmptyModuleList()
 	files, err := m.loadFilesInDir(rootPath, language)
 	if err != nil {
 		return nil, err
 	}
 	for _, file := range files {
 		if (*modules)[file.GetDirPath()] == nil {
-			module := domain.NewModule(language)
+			module := entity.NewModule(language)
 			module.AddSourceFile(file)
 			modules.Add(file.GetDirPath(), module)
 		} else {
@@ -38,14 +38,14 @@ func (m *ModuleFactory) DirectoryAsModule(
 
 func (m *ModuleFactory) loadFilesInDir(
 	dirPath string,
-	language domain.LanguageType,
-) ([]*domain.SourceFile, error) {
-	var files []*domain.SourceFile
+	language entity.LanguageType,
+) ([]*entity.SourceFile, error) {
+	var files []*entity.SourceFile
 	filepath.Walk(dirPath, func(path string, f os.FileInfo, _ error) error {
 		if !f.IsDir() {
 			r, err := regexp.MatchString(language.Extension(), f.Name())
 			if err == nil && r {
-				files = append(files, domain.NewSourceFile(path))
+				files = append(files, entity.NewSourceFile(path))
 			}
 		}
 		return nil

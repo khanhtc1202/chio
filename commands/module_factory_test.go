@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/khanhtc1202/chio/domain"
+	"github.com/khanhtc1202/chio/entity"
 )
 
 var rootPath = "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
 
 func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
 	moduleFac := NewModuleFactory()
-	modules, err := moduleFac.DirectoryAsModule(rootPath, domain.GO)
+	modules, err := moduleFac.DirectoryAsModule(rootPath, entity.GO)
 	if err != nil {
 		t.Fatal("Error on load file level test:", err)
 	}
