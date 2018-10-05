@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"testing"
 
+	"os"
+	"path/filepath"
+
 	"github.com/khanhtc1202/chio/entity"
 )
 
-var rootPath = "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
-
 func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
+	rootPath, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+
 	moduleFac := NewModuleFactory()
 	modules, err := moduleFac.DirectoryAsModule(rootPath, entity.GO)
 	if err != nil {
