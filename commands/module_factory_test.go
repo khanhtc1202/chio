@@ -18,10 +18,10 @@ func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
 	if err != nil {
 		t.Fatal("Error on load file level test:", err)
 	}
-	if len(*modules) == 0 {
+	if len(modules) == 0 {
 		t.Fatal("Count false in load module file level")
 	}
-	for _, module := range *modules {
+	for _, module := range modules {
 		files := module.GetSourceFilesPath()
 		fmt.Println(files)
 	}

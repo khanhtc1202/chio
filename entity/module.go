@@ -29,10 +29,6 @@ func (m *Module) GetSourceFilesPath() []string {
 // modules type
 type Modules map[string]*Module
 
-func EmptyModuleList() *Modules {
-	return &Modules{}
-}
-
 func (m *Modules) Add(rootPath string, module *Module) {
 	(*m)[rootPath] = module
 }
