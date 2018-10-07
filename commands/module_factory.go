@@ -20,23 +20,23 @@ func (m *ModuleFactory) DirectoryAsModule(
 	language entity.LanguageType,
 ) (entity.Modules, error) {
 	var modules entity.Modules
-	files, err := m.loadFilesInDir(rootPath, language)
+	files, err := m.loadModulesFiles(rootPath, language)
 	if err != nil {
 		return nil, err
 	}
 	for _, file := range files {
-		if (modules)[file.GetDirPath()] == nil {
+		if modules.GetModuleByPath(file.GetDirPath()) == nil {
 			module := entity.NewModule(language)
 			module.AddSourceFile(file)
-			modules.Add(file.GetDirPath(), module)
+			modules.Add(module)
 		} else {
-			(modules)[file.GetDirPath()].AddSourceFile(file)
+			modules.GetModuleByPath(file.GetDirPath()).AddSourceFile(file)
 		}
 	}
 	return modules, nil
 }
 
-func (m *ModuleFactory) loadFilesInDir(
+func (m *ModuleFactory) loadModulesFiles(
 	dirPath string,
 	language entity.LanguageType,
 ) ([]*entity.SourceFile, error) {

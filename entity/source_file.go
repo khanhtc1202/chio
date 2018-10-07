@@ -2,7 +2,6 @@ package entity
 
 import (
 	"io/ioutil"
-	"os"
 	"path"
 )
 
@@ -24,8 +23,7 @@ func (s *SourceFile) GetDirPath() string {
 func (s *SourceFile) Content() (string, error) {
 	b, err := ioutil.ReadFile(s.Path)
 	if err != nil {
-		// panic when error on load content
-		os.Exit(1)
+		return "", err
 	}
 	return string(b), nil
 }

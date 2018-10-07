@@ -1,21 +1,40 @@
 package entity
 
+import (
+	"errors"
+	"fmt"
+	"math"
+	"strings"
+)
+
 type Module struct {
-	ModuleProperties
-	SourceFiles []*SourceFile
-	Language    LanguageType
+	RootPath       string
+	SourceFiles    []*SourceFile
+	Language       LanguageType
+	FanInDep       int
+	FanOutDep      int
+	AbstractMember int
+	ConcreteMember int
 }
 
 func NewModule(language LanguageType) *Module {
 	return &Module{
-		Language:         language,
-		SourceFiles:      []*SourceFile{},
-		ModuleProperties: FactoryModuleProperties(language),
+		Language:    language,
+		SourceFiles: []*SourceFile{},
 	}
 }
 
-func (m *Module) AddSourceFile(file *SourceFile) {
-	m.SourceFiles = append(m.SourceFiles, file)
+func (m *Module) AddSourceFile(file *SourceFile) error {
+	if m.RootPath == "" {
+		m.RootPath = file.GetDirPath()
+	}
+
+	if strings.Contains(file.Path, m.RootPath) {
+		m.SourceFiles = append(m.SourceFiles, file)
+		return nil
+	}
+
+	return errors.New(fmt.Sprintf("Error: Add not contain file path to module: %s\n", m.RootPath))
 }
 
 func (m *Module) GetSourceFilesPath() []string {
@@ -24,4 +43,30 @@ func (m *Module) GetSourceFilesPath() []string {
 		filesPath = append(filesPath, path.Path)
 	}
 	return filesPath
+}
+
+func (m *Module) Instability() float64 {
+	fOut := m.FanOutDep
+	fIn := m.FanInDep
+	return float64(fOut) / float64(fOut+fIn)
+}
+
+func (m *Module) Abstractness() float64 {
+	abs := m.AbstractMember
+	con := m.ConcreteMember
+	return float64(abs) / float64(abs+con)
+}
+
+func (m *Module) Distance() float64 {
+	// cal instability
+	fOut := m.FanOutDep
+	fIn := m.FanInDep
+	instability := float64(fOut) / float64(fOut+fIn)
+
+	// cal abstractness
+	abs := m.AbstractMember
+	con := m.ConcreteMember
+	abstractness := float64(abs) / float64(abs+con)
+
+	return math.Abs(instability + abstractness - 1)
 }
