@@ -3,8 +3,6 @@ package main
 import (
 	"os"
 
-	"fmt"
-
 	"github.com/khanhtc1202/chio/commands"
 	"github.com/khanhtc1202/chio/entity"
 )
@@ -20,9 +18,13 @@ func main() {
 		panic("Error on load modules")
 	}
 
-	println(pwd)
 	for _, module := range modules {
-		files := module.GetSourceFilesPath()
-		fmt.Println(files)
+		loader := commands.NewLoader(module.Language)
 	}
+
+	//println(pwd)
+	//for _, module := range modules {
+	//	files := module.GetSourceFilesPath()
+	//	fmt.Println(files)
+	//}
 }
