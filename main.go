@@ -2,24 +2,21 @@ package main
 
 import (
 	"os"
-
-	"github.com/khanhtc1202/chio/commands"
-	"github.com/khanhtc1202/chio/entity"
 )
 
 func main() {
 	println("Hello")
 	pwd, _ := os.Getwd()
 
-	moduleFact := commands.NewModuleFactory()
+	moduleFact := NewModuleFactory()
 
-	modules, err := moduleFact.DirectoryAsModule(pwd, entity.GO)
+	modules, err := moduleFact.DirectoryAsModule(pwd, GO)
 	if err != nil {
 		panic("Error on load modules")
 	}
 
 	for _, module := range modules {
-		loader := commands.NewLoader(module.Language)
+		loader := NewLoader(module.Language)
 	}
 
 	//println(pwd)

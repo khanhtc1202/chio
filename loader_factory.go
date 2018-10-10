@@ -1,8 +1,4 @@
-package commands
-
-import (
-	"github.com/khanhtc1202/chio/entity"
-)
+package main
 
 type Loader interface {
 }
@@ -15,11 +11,11 @@ type JavaLoader struct {
 	Loader
 }
 
-func NewLoader(lang entity.LanguageType) Loader {
+func NewLoader(lang LanguageType) Loader {
 	switch lang {
-	case entity.GO:
+	case GO:
 		return &GolangLoader{}
-	case entity.JAVA:
+	case JAVA:
 		return &JavaLoader{}
 	default:
 		return &GolangLoader{}
