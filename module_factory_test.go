@@ -4,21 +4,18 @@ import (
 	"fmt"
 	"testing"
 
-	"os"
-	"path/filepath"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
-	rootPath, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	rootPath := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio/sample"
 
 	moduleFac := NewModuleFactory()
 	modules, err := moduleFac.DirectoryAsModule(rootPath, GO)
-	if err != nil {
-		t.Fatal("Error on load file level test:", err)
-	}
-	if len(modules) == 0 {
-		t.Fatal("Count false in load module file level")
-	}
+
+	assert.Nil(t, err)
+	assert.NotEqual(t, 0, len(modules))
+
 	for _, module := range modules {
 		files := module.GetSourceFilesPath()
 		fmt.Println(files)

@@ -17,7 +17,7 @@ func (m *ModuleFactory) DirectoryAsModule(
 	rootPath string,
 	language LanguageType,
 ) (Modules, error) {
-	var modules Modules
+	modules := NewModules()
 	files, err := m.loadModulesFiles(rootPath, language)
 	if err != nil {
 		return nil, err

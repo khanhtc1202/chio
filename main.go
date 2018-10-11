@@ -10,14 +10,14 @@ func main() {
 
 	moduleFact := NewModuleFactory()
 
-	modules, err := moduleFact.DirectoryAsModule(pwd, GO)
+	_, err := moduleFact.DirectoryAsModule(pwd, GO)
 	if err != nil {
 		panic("Error on load modules")
 	}
 
-	for _, module := range modules {
-		loader := NewLoader(module.Language)
-	}
+	//for _, module := range modules {
+	//	loader := NewLoader(module.Language)
+	//}
 
 	//println(pwd)
 	//for _, module := range modules {

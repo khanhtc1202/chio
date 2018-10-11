@@ -7,6 +7,10 @@ import (
 
 type Modules map[string]*Module
 
+func NewModules() Modules {
+	return Modules{}
+}
+
 func (m *Modules) Add(module *Module) error {
 	if module.RootPath != "" {
 		(*m)[module.RootPath] = module
