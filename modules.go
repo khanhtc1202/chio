@@ -23,3 +23,8 @@ func (m *Modules) Add(module *Module) error {
 func (m *Modules) GetModuleByPath(path string) *Module {
 	return (*m)[path]
 }
+
+func (m *Modules) Load() error {
+	// TODO implement: call module loader, get info to update module properties
+	return nil
+}

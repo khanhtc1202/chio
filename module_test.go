@@ -7,7 +7,7 @@ import (
 )
 
 func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
-	emptyModule := NewModule(GO)
+	emptyModule := NewModule(nil)
 	file := NewSourceFile("/home/user/go/src/sample/main.go")
 
 	err := emptyModule.AddSourceFile(file)
@@ -16,7 +16,7 @@ func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
 }
 
 func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
-	emptyModule := NewModule(GO)
+	emptyModule := NewModule(nil)
 	file1 := NewSourceFile("/home/user/go/src/sample/main.go")
 	file2 := NewSourceFile("/home/user/go/src/sample/submodule/sample.go")
 
@@ -24,4 +24,7 @@ func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
 	err = emptyModule.AddSourceFile(file2)
 	assert.Nil(t, err)
 	assert.Equal(t, "/home/user/go/src/sample/", emptyModule.RootPath)
+}
+
+func TestModule_GetSourceFilesPath(t *testing.T) {
 }

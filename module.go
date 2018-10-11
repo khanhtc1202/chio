@@ -8,18 +8,18 @@ import (
 )
 
 type Module struct {
+	Loader
 	RootPath       string
 	SourceFiles    []*SourceFile
-	Language       LanguageType
 	FanInDep       int
 	FanOutDep      int
 	AbstractMember int
 	ConcreteMember int
 }
 
-func NewModule(language LanguageType) *Module {
+func NewModule(loader Loader) *Module {
 	return &Module{
-		Language:    language,
+		Loader:      loader,
 		SourceFiles: []*SourceFile{},
 	}
 }

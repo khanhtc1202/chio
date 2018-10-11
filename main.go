@@ -5,7 +5,6 @@ import (
 )
 
 func main() {
-	println("Hello")
 	pwd, _ := os.Getwd()
 
 	moduleFact := NewModuleFactory()
