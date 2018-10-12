@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"errors"
@@ -25,6 +25,14 @@ func (m *Modules) GetModuleByPath(path string) *Module {
 }
 
 func (m *Modules) Load() error {
-	// TODO implement: call module loader, get info to update module properties
+	for _, module := range *m {
+		module.ConcreteMember, _ = module.CountConcreteMembers()
+		module.AbstractMember, _ = module.CountAbstractMembers()
+		refToModules, _ := module.ReferenceToModules()
+		for _, refModule := range refToModules {
+			module.FanInDep += 1
+			refModule.FanOutDep += 1
+		}
+	}
 	return nil
 }

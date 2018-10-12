@@ -1,13 +1,14 @@
-package main
+package src_test
 
 import (
 	"testing"
 
+	"github.com/khanhtc1202/chio/src"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSourceFile_GetDirPath(t *testing.T) {
-	file := NewSourceFile("/home/user/go/src/sample/main.go")
+	file := src.NewSourceFile("/home/user/go/src/sample/main.go")
 	expected := "/home/user/go/src/sample/"
 
 	dir := file.GetDirPath()

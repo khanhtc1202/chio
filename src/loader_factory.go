@@ -1,4 +1,4 @@
-package main
+package src
 
 type Loader interface {
 	CountConcreteMembers() (int, error)
