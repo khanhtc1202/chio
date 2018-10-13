@@ -28,4 +28,10 @@ func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
 }
 
 func TestModule_GetSourceFilesPath(t *testing.T) {
+	emptyModule := src.NewModule(nil)
+	file1 := src.NewSourceFile("/home/user/go/src/sample/main.go")
+	_ = emptyModule.AddSourceFile(file1)
+
+	filesPath := emptyModule.GetSourceFilesPath()
+	assert.Equal(t, "/home/user/go/src/sample/main.go", filesPath[0])
 }
