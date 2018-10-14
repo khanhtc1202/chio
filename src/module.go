@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// FIXME external/internal module
 type Module struct {
 	Loader
 	RootPath       string
