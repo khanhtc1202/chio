@@ -8,7 +8,7 @@ import (
 )
 
 func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
-	emptyModule := src.NewModule(nil)
+	emptyModule := src.NewModule("/home/user/go/src/sample/", nil)
 	file := src.NewSourceFile("/home/user/go/src/sample/main.go")
 
 	err := emptyModule.AddSourceFile(file)
@@ -17,7 +17,7 @@ func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
 }
 
 func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
-	emptyModule := src.NewModule(nil)
+	emptyModule := src.NewModule("/home/user/go/src/sample/", nil)
 	file1 := src.NewSourceFile("/home/user/go/src/sample/main.go")
 	file2 := src.NewSourceFile("/home/user/go/src/sample/submodule/sample.go")
 
@@ -28,7 +28,7 @@ func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
 }
 
 func TestModule_GetSourceFilesPath(t *testing.T) {
-	emptyModule := src.NewModule(nil)
+	emptyModule := src.NewModule("/home/user/go/src/sample/", nil)
 	file1 := src.NewSourceFile("/home/user/go/src/sample/main.go")
 	_ = emptyModule.AddSourceFile(file1)
 

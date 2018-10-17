@@ -12,12 +12,12 @@ func NewModules() Modules {
 }
 
 func (m *Modules) Add(module *Module) error {
-	if module.RootPath != "" {
-		(*m)[module.RootPath] = module
-		return nil
+	if module.RootPath == "" || len(module.SourceFiles) == 0 {
+		return errors.New(fmt.Sprintf("Error: Add empty module to modules list"))
 	}
 
-	return errors.New(fmt.Sprintf("Error: Add empty module to modules list"))
+	(*m)[module.RootPath] = module
+	return nil
 }
 
 func (m *Modules) GetModuleByPath(path string) *Module {

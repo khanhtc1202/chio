@@ -18,18 +18,15 @@ type Module struct {
 	ConcreteMember int
 }
 
-func NewModule(loader Loader) *Module {
+func NewModule(rootPath string, loader Loader) *Module {
 	return &Module{
 		Loader:      loader,
+		RootPath:    rootPath,
 		SourceFiles: []*SourceFile{},
 	}
 }
 
 func (m *Module) AddSourceFile(file *SourceFile) error {
-	if m.RootPath == "" {
-		m.RootPath = file.GetDirPath()
-	}
-
 	if strings.Contains(file.Path, m.RootPath) {
 		m.SourceFiles = append(m.SourceFiles, file)
 		return nil

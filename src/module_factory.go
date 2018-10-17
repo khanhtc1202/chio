@@ -24,7 +24,7 @@ func (m *ModuleFactory) DirectoryAsModule(
 	}
 	for _, file := range files {
 		if modules.GetModuleByPath(file.GetDirPath()) == nil {
-			module := NewModule(LoaderFactory(language))
+			module := NewModule(file.GetDirPath(), LoaderFactory(language))
 			module.AddSourceFile(file)
 			modules.Add(module)
 		} else {
