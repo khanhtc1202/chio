@@ -3,6 +3,7 @@ package src
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 type Modules map[string]*Module
@@ -21,7 +22,12 @@ func (m *Modules) Add(module *Module) error {
 }
 
 func (m *Modules) GetModuleByPath(path string) *Module {
-	return (*m)[path]
+	for mPath, module := range *m {
+		if strings.Contains(mPath, path) {
+			return module
+		}
+	}
+	return nil
 }
 
 func (m *Modules) Load(loader Loader) error {
