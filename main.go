@@ -5,7 +5,9 @@ import (
 
 	"flag"
 
+	"os"
 	"github.com/khanhtc1202/chio/src"
+	"github.com/olekukonko/tablewriter"
 )
 
 type CommandParams struct {
@@ -24,6 +26,34 @@ func parseParams() *CommandParams {
 		Path:     modulePath,
 		Language: *language,
 	}
+}
+
+func print(modules src.Modules) {
+	var data [][]string
+
+	for _, module := range modules {
+		row := []string{
+			module.RootPath,
+			fmt.Sprintf("%d", len(module.SourceFiles)),
+			fmt.Sprintf("%d", module.ConcreteMember),
+			fmt.Sprintf("%d", module.AbstractMember),
+			fmt.Sprintf("%d", module.FanInDep),
+			fmt.Sprintf("%d", module.FanOutDep),
+			fmt.Sprintf("%.3f", module.Abstractness()),
+			fmt.Sprintf("%.3f", module.Instability()),
+			fmt.Sprintf("%.3f", module.Distance()),
+		}
+
+		data = append(data, row)
+	}
+
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Module Path", "Files", "Concrete", "Abstract", "FanIn", "FanOut", "Abstractness", "Instability", "Distance"})
+
+	for _, v := range data {
+		table.Append(v)
+	}
+	table.Render()
 }
 
 func main() {
@@ -47,14 +77,5 @@ func main() {
 	modules.Load(loader)
 
 	// print output
-	for _, module := range modules {
-		fmt.Println("---------------")
-		fmt.Printf("\nPath: %s", module.RootPath)
-		fmt.Printf("\nConcrete/Abstract members: %d - %d", module.ConcreteMember, module.AbstractMember)
-		fmt.Printf("\nFanIn/FanOut dependencies: %d - %d", module.FanInDep, module.FanOutDep)
-		fmt.Printf("\nAbstractness: %v", module.Abstractness())
-		fmt.Printf("\nInstability: %v", module.Instability())
-		fmt.Printf("\nDistance: %v", module.Distance())
-		fmt.Println("\n---------------")
-	}
+	print(modules)
 }
