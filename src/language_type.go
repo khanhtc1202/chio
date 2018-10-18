@@ -1,5 +1,7 @@
 package src
 
+import "strings"
+
 type LanguageType int
 
 const (
@@ -9,6 +11,15 @@ const (
 	RUBY
 	NODEJS
 )
+
+func ValueOfLanguage(lang string) LanguageType {
+	switch strings.ToLower(lang) {
+	case "go":
+		return GO
+	default:
+		return GO
+	}
+}
 
 func (l LanguageType) String() string {
 	switch l {

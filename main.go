@@ -3,23 +3,50 @@ package main
 import (
 	"fmt"
 
+	"flag"
+
 	"github.com/khanhtc1202/chio/src"
 )
 
+type CommandParams struct {
+	Path     string
+	Language string
+}
+
+func parseParams() *CommandParams {
+	var modulePath string
+	flag.StringVar(&modulePath, "p", ".", "path to module")
+	language := flag.String("l", "go", "language(s): go")
+
+	flag.Parse()
+
+	return &CommandParams{
+		Path:     modulePath,
+		Language: *language,
+	}
+}
+
 func main() {
-	pwd := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/boogeyman"
+	cmdParams := parseParams()
 
+	modulePath := cmdParams.Path
+	language := src.ValueOfLanguage(cmdParams.Language)
+
+	// load dir level
+	// TODO move to command params
 	moduleFact := src.NewModuleFactory()
-
-	modules, err := moduleFact.DirectoryAsModule(pwd, src.GO)
+	modules, err := moduleFact.DirectoryAsModule(modulePath, language)
 	if err != nil {
 		panic("Error on load modules")
 	}
 
-	loader := src.LoaderFactory(src.GO)
+	// loader object by language
+	loader := src.LoaderFactory(language)
 
+	// load modules
 	modules.Load(loader)
 
+	// print output
 	for _, module := range modules {
 		fmt.Println("---------------")
 		fmt.Printf("\nPath: %s", module.RootPath)
