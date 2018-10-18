@@ -16,7 +16,7 @@ func TestModules_Add_AddNotEmptyModule(t *testing.T) {
 }
 
 func TestModules_Load(t *testing.T) {
-	modules := loadableModules
+	modules := fakeLoadableModules()
 	modules.Load()
 
 	moduleA := modules.GetModuleByPath("/src/a")
@@ -32,29 +32,14 @@ func TestModules_Load(t *testing.T) {
 	assert.Equal(t, 1, moduleB.FanOutDep)
 }
 
-var loadableModules = fakeLoadableModules()
-
 func fakeLoadableModules() src.Modules {
 	modules := src.NewModules()
-	moduleB := fakeLoadedModule("/src/b", &MockLoaderRefNil{})
-	moduleA := fakeLoadedModule("/src/a", &MockLoaderRefToB{})
+	moduleB := src.NewModule("/src/b", &MockLoaderRefNil{})
+	moduleA := src.NewModule("/src/a", &MockLoaderRefToB{})
 
-	modules.Add(moduleA)
-	modules.Add(moduleB)
+	modules[moduleB.RootPath] = moduleB
+	modules[moduleA.RootPath] = moduleA
 	return modules
-}
-
-func fakeLoadedModule(path string, loader src.Loader) *src.Module {
-	return &src.Module{
-		Loader:   loader,
-		RootPath: path,
-	}
-}
-
-func fakeRefToModule(mm *src.Module) []*src.Module {
-	return []*src.Module{
-		mm,
-	}
 }
 
 // ref to module B loader
@@ -68,10 +53,8 @@ func (m *MockLoaderRefToB) CountConcreteMembers() (int, error) {
 func (m *MockLoaderRefToB) CountAbstractMembers() (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToB) ReferenceToModules() ([]*src.Module, error) {
-	//moduleB := fakeLoadedModule("/src/b", &MockLoaderRefNil{})
-	moduleB := loadableModules.GetModuleByPath("/src/b")
-	return fakeRefToModule(moduleB), nil
+func (m *MockLoaderRefToB) ReferenceToModules() ([]string, error) {
+	return []string{"/src/b"}, nil
 }
 
 // ref to nil module loader
@@ -85,6 +68,6 @@ func (m *MockLoaderRefNil) CountConcreteMembers() (int, error) {
 func (m *MockLoaderRefNil) CountAbstractMembers() (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefNil) ReferenceToModules() ([]*src.Module, error) {
-	return nil, nil
+func (m *MockLoaderRefNil) ReferenceToModules() ([]string, error) {
+	return []string{}, nil
 }
