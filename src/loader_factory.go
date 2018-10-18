@@ -3,7 +3,7 @@ package src
 type Loader interface {
 	CountConcreteMembers() (int, error)
 	CountAbstractMembers() (int, error)
-	ReferenceToModules() ([]string, error)
+	ReferenceToPaths() ([]string, error)
 }
 
 type GoFileLoader struct {
@@ -20,7 +20,7 @@ func (g *GoFileLoader) CountAbstractMembers() (int, error) {
 	return 0, nil
 }
 
-func (g *GoFileLoader) ReferenceToModules() ([]string, error) {
+func (g *GoFileLoader) ReferenceToPaths() ([]string, error) {
 	// TODO implement
 	return nil, nil
 }

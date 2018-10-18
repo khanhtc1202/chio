@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestModules_Add_AddNotEmptyModule(t *testing.T) {
+func TestModules_Add_FailByAddEmptyModule(t *testing.T) {
 	modules := src.NewModules()
 	module := src.NewModule("/", nil)
 
@@ -22,7 +22,7 @@ func TestModules_Load(t *testing.T) {
 	moduleA := modules.GetModuleByPath("/src/a")
 	assert.Equal(t, 2, moduleA.AbstractMember)
 	assert.Equal(t, 2, moduleA.ConcreteMember)
-	assert.Equal(t, 1, moduleA.FanInDep)
+	assert.Equal(t, 2, moduleA.FanInDep)
 	assert.Equal(t, 0, moduleA.FanOutDep)
 
 	moduleB := modules.GetModuleByPath("/src/b")
@@ -35,7 +35,7 @@ func TestModules_Load(t *testing.T) {
 func fakeLoadableModules() src.Modules {
 	modules := src.NewModules()
 	moduleB := src.NewModule("/src/b", &MockLoaderRefNil{})
-	moduleA := src.NewModule("/src/a", &MockLoaderRefToB{})
+	moduleA := src.NewModule("/src/a", &MockLoaderRefToBAndExternalModule{})
 
 	modules[moduleB.RootPath] = moduleB
 	modules[moduleA.RootPath] = moduleA
@@ -43,18 +43,18 @@ func fakeLoadableModules() src.Modules {
 }
 
 // ref to module B loader
-type MockLoaderRefToB struct {
+type MockLoaderRefToBAndExternalModule struct {
 	src.Loader
 }
 
-func (m *MockLoaderRefToB) CountConcreteMembers() (int, error) {
+func (m *MockLoaderRefToBAndExternalModule) CountConcreteMembers() (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToB) CountAbstractMembers() (int, error) {
+func (m *MockLoaderRefToBAndExternalModule) CountAbstractMembers() (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToB) ReferenceToModules() ([]string, error) {
-	return []string{"/src/b"}, nil
+func (m *MockLoaderRefToBAndExternalModule) ReferenceToModules() ([]string, error) {
+	return []string{"/src/b", "/src/external"}, nil
 }
 
 // ref to nil module loader

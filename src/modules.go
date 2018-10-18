@@ -28,7 +28,7 @@ func (m *Modules) Load() error {
 	for _, module := range *m {
 		module.ConcreteMember, _ = module.CountConcreteMembers()
 		module.AbstractMember, _ = module.CountAbstractMembers()
-		refPaths, _ := module.ReferenceToModules()
+		refPaths, _ := module.ReferenceToPaths()
 		for _, path := range refPaths {
 			module.FanInDep += 1
 			if refModule := m.GetModuleByPath(path); refModule != nil {
