@@ -17,7 +17,7 @@ Main idea from [Clean Architecture book](https://books.google.co.jp/books/about/
 
 Summarization go [here](https://github.com/khanhtc1202/til/issues/7).
 
-Three metrics we carry about:
+Three metrics we care about:
 
 1. Abstractness (A):
 This metric has the range [0, 1]. A value of 0 implies that the module has no abstract classes at all. A value of 1 implies that the module contains nothing but abstract classes.
@@ -106,9 +106,9 @@ All contributions will be welcome in this project.
 
 ## Download
 
-For linux x64 : [download]()
+For linux x64 : [download](https://github.com/khanhtc1202/chio/releases/download/0.0.1/chio-linux-64)
 
-For MacOS x64 : [download]()
+For MacOS x64 : [download](https://github.com/khanhtc1202/chio/releases/download/0.0.1/chio-darwin-64)
 
 ## License
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
