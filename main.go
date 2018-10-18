@@ -8,6 +8,7 @@ import (
 	"os"
 	"github.com/khanhtc1202/chio/src"
 	"github.com/olekukonko/tablewriter"
+	"strings"
 )
 
 type CommandParams struct {
@@ -28,12 +29,12 @@ func parseParams() *CommandParams {
 	}
 }
 
-func print(modules src.Modules) {
+func print(srcPath string, modules src.Modules) {
 	var data [][]string
 
 	for _, module := range modules {
 		row := []string{
-			module.RootPath,
+			strings.Replace(module.RootPath, srcPath, "", -1),
 			fmt.Sprintf("%d", len(module.SourceFiles)),
 			fmt.Sprintf("%d", module.ConcreteMember),
 			fmt.Sprintf("%d", module.AbstractMember),
@@ -59,13 +60,13 @@ func print(modules src.Modules) {
 func main() {
 	cmdParams := parseParams()
 
-	modulePath := cmdParams.Path
+	srcPath := cmdParams.Path
 	language := src.ValueOfLanguage(cmdParams.Language)
 
 	// load dir level
 	// TODO move to command params
 	moduleFact := src.NewModuleFactory()
-	modules, err := moduleFact.DirectoryAsModule(modulePath, language)
+	modules, err := moduleFact.DirectoryAsModule(srcPath, language)
 	if err != nil {
 		panic("Error on load modules")
 	}
@@ -77,5 +78,5 @@ func main() {
 	modules.Load(loader)
 
 	// print output
-	print(modules)
+	print(srcPath, modules)
 }
