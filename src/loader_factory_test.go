@@ -35,7 +35,7 @@ func targetModule() *src.Module {
 	return &src.Module{
 		SourceFiles: []*src.SourceFile{
 			{
-				Path: "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio/src/loader_factory.go",
+				Path: "./loader_factory.go",
 			},
 		},
 	}

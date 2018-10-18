@@ -9,7 +9,7 @@ import (
 )
 
 func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
-	rootPath := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio/sample"
+	rootPath := "../sample"
 
 	moduleFac := src.NewModuleFactory()
 	modules, err := moduleFac.DirectoryAsModule(rootPath, src.GO)
