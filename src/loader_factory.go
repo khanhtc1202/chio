@@ -1,26 +1,25 @@
 package src
 
 type Loader interface {
-	CountConcreteMembers() (int, error)
-	CountAbstractMembers() (int, error)
-	ReferenceToPaths() ([]string, error)
+	CountConcreteMembers(files SourceFiles) (int, error)
+	CountAbstractMembers(files SourceFiles) (int, error)
+	ReferenceToPaths(files SourceFiles) ([]string, error)
 }
 
 type GoFileLoader struct {
-	Loader
 }
 
-func (g *GoFileLoader) CountConcreteMembers() (int, error) {
+func (g *GoFileLoader) CountConcreteMembers(files SourceFiles) (int, error) {
 	// TODO implement
 	return 0, nil
 }
 
-func (g *GoFileLoader) CountAbstractMembers() (int, error) {
+func (g *GoFileLoader) CountAbstractMembers(files SourceFiles) (int, error) {
 	// TODO implement
 	return 0, nil
 }
 
-func (g *GoFileLoader) ReferenceToPaths() ([]string, error) {
+func (g *GoFileLoader) ReferenceToPaths(files SourceFiles) ([]string, error) {
 	// TODO implement
 	return nil, nil
 }

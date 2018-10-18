@@ -24,7 +24,7 @@ func (m *ModuleFactory) DirectoryAsModule(
 	}
 	for _, file := range files {
 		if modules.GetModuleByPath(file.GetDirPath()) == nil {
-			module := NewModule(file.GetDirPath(), LoaderFactory(language))
+			module := NewModule(file.GetDirPath())
 			module.AddSourceFile(file)
 			modules.Add(module)
 		} else {
@@ -37,8 +37,8 @@ func (m *ModuleFactory) DirectoryAsModule(
 func (m *ModuleFactory) loadModulesFiles(
 	dirPath string,
 	language LanguageType,
-) ([]*SourceFile, error) {
-	var files []*SourceFile
+) (SourceFiles, error) {
+	var files SourceFiles
 	filepath.Walk(dirPath, func(path string, f os.FileInfo, _ error) error {
 		if !f.IsDir() {
 			r, err := regexp.MatchString(language.Extension(), f.Name())

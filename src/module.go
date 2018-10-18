@@ -8,20 +8,18 @@ import (
 )
 
 type Module struct {
-	Loader
 	RootPath       string
-	SourceFiles    []*SourceFile
+	SourceFiles    SourceFiles
 	FanInDep       int
 	FanOutDep      int
 	AbstractMember int
 	ConcreteMember int
 }
 
-func NewModule(rootPath string, loader Loader) *Module {
+func NewModule(rootPath string) *Module {
 	return &Module{
-		Loader:      loader,
 		RootPath:    rootPath,
-		SourceFiles: []*SourceFile{},
+		SourceFiles: EmptySourceFiles(),
 	}
 }
 

@@ -24,11 +24,11 @@ func (m *Modules) GetModuleByPath(path string) *Module {
 	return (*m)[path]
 }
 
-func (m *Modules) Load() error {
+func (m *Modules) Load(loader Loader) error {
 	for _, module := range *m {
-		module.ConcreteMember, _ = module.CountConcreteMembers()
-		module.AbstractMember, _ = module.CountAbstractMembers()
-		refPaths, _ := module.ReferenceToPaths()
+		module.ConcreteMember, _ = loader.CountConcreteMembers(module.SourceFiles)
+		module.AbstractMember, _ = loader.CountAbstractMembers(module.SourceFiles)
+		refPaths, _ := loader.ReferenceToPaths(module.SourceFiles)
 		for _, path := range refPaths {
 			module.FanInDep += 1
 			if refModule := m.GetModuleByPath(path); refModule != nil {

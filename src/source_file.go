@@ -5,6 +5,12 @@ import (
 	"path"
 )
 
+type SourceFiles []*SourceFile
+
+func EmptySourceFiles() SourceFiles {
+	return []*SourceFile{}
+}
+
 type SourceFile struct {
 	Path string
 }
