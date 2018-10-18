@@ -15,4 +15,3 @@ bin/*
 !bin/.gitkeep
 .idea/
 vendor/
-sample/
