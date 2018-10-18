@@ -21,6 +21,11 @@ func NewSourceFile(path string) *SourceFile {
 	}
 }
 
+func (s *SourceFile) Name() string {
+	_, file := path.Split(s.Path)
+	return file
+}
+
 func (s *SourceFile) GetDirPath() string {
 	dir, _ := path.Split(s.Path)
 	return dir

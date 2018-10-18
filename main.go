@@ -1,15 +1,13 @@
 package main
 
 import (
-	"os"
-
 	"fmt"
 
 	"github.com/khanhtc1202/chio/src"
 )
 
 func main() {
-	pwd, _ := os.Getwd()
+	pwd := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
 
 	moduleFact := src.NewModuleFactory()
 

@@ -2,6 +2,7 @@ package src
 
 import (
 	"regexp"
+	"strings"
 )
 
 type Loader interface {
@@ -25,6 +26,10 @@ type GoFileLoader struct {
 func (g *GoFileLoader) CountConcreteMembers(module *Module) (int, error) {
 	totalConcreteMembers := 0
 	for _, file := range module.SourceFiles {
+		if strings.Contains(file.Name(), "test") {
+			continue
+		}
+
 		content, err := file.Content()
 		if err != nil {
 			return 0, err
@@ -40,6 +45,10 @@ func (g *GoFileLoader) CountConcreteMembers(module *Module) (int, error) {
 func (g *GoFileLoader) CountAbstractMembers(module *Module) (int, error) {
 	totalAbstractMembers := 0
 	for _, file := range module.SourceFiles {
+		if strings.Contains(file.Name(), "test") {
+			continue
+		}
+
 		content, err := file.Content()
 		if err != nil {
 			return 0, err
@@ -55,6 +64,10 @@ func (g *GoFileLoader) CountAbstractMembers(module *Module) (int, error) {
 func (g *GoFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
 	var refPaths []string
 	for _, file := range module.SourceFiles {
+		if strings.Contains(file.Name(), "test") {
+			continue
+		}
+
 		content, err := file.Content()
 		if err != nil {
 			return refPaths, err
