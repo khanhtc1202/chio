@@ -17,7 +17,7 @@ func TestModules_Add_FailByAddEmptyModule(t *testing.T) {
 
 func TestModules_Load(t *testing.T) {
 	modules := fakeLoadableModules()
-	modules.Load(&MockLoaderRefToBAndExternalModule{})
+	modules.Load(&MockLoaderRefToB{})
 
 	moduleA := modules.GetModuleByPath("/src/a")
 	assert.Equal(t, 2, moduleA.AbstractMember)
@@ -43,16 +43,16 @@ func fakeLoadableModules() src.Modules {
 }
 
 // ref to module B loader
-type MockLoaderRefToBAndExternalModule struct {
+type MockLoaderRefToB struct {
 	src.Loader
 }
 
-func (m *MockLoaderRefToBAndExternalModule) CountConcreteMembers(files src.SourceFiles) (int, error) {
+func (m *MockLoaderRefToB) CountConcreteMembers(*src.Module) (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToBAndExternalModule) CountAbstractMembers(files src.SourceFiles) (int, error) {
+func (m *MockLoaderRefToB) CountAbstractMembers(*src.Module) (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToBAndExternalModule) ReferenceToPaths(files src.SourceFiles) ([]string, error) {
+func (m *MockLoaderRefToB) ReferenceToPaths(*src.Module) ([]string, error) {
 	return []string{"/src/b"}, nil
 }

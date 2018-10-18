@@ -1,27 +1,13 @@
 package src
 
+import (
+	"regexp"
+)
+
 type Loader interface {
-	CountConcreteMembers(files SourceFiles) (int, error)
-	CountAbstractMembers(files SourceFiles) (int, error)
-	ReferenceToPaths(files SourceFiles) ([]string, error)
-}
-
-type GoFileLoader struct {
-}
-
-func (g *GoFileLoader) CountConcreteMembers(files SourceFiles) (int, error) {
-	// TODO implement
-	return 0, nil
-}
-
-func (g *GoFileLoader) CountAbstractMembers(files SourceFiles) (int, error) {
-	// TODO implement
-	return 0, nil
-}
-
-func (g *GoFileLoader) ReferenceToPaths(files SourceFiles) ([]string, error) {
-	// TODO implement
-	return nil, nil
+	CountConcreteMembers(*Module) (int, error)
+	CountAbstractMembers(*Module) (int, error)
+	ReferenceToPaths(*Module) ([]string, error)
 }
 
 func LoaderFactory(lang LanguageType) Loader {
@@ -31,4 +17,55 @@ func LoaderFactory(lang LanguageType) Loader {
 	default:
 		return &GoFileLoader{}
 	}
+}
+
+type GoFileLoader struct {
+}
+
+func (g *GoFileLoader) CountConcreteMembers(module *Module) (int, error) {
+	totalConcreteMembers := 0
+	for _, file := range module.SourceFiles {
+		content, err := file.Content()
+		if err != nil {
+			return 0, err
+		}
+
+		concreteRex := regexp.MustCompile(`(?:type)(\s)*\w+(\s)*(?:struct)(\s)*(?:\{)`)
+		matches := concreteRex.FindAllStringIndex(content, -1)
+		totalConcreteMembers += len(matches)
+	}
+	return totalConcreteMembers, nil
+}
+
+func (g *GoFileLoader) CountAbstractMembers(module *Module) (int, error) {
+	totalAbstractMembers := 0
+	for _, file := range module.SourceFiles {
+		content, err := file.Content()
+		if err != nil {
+			return 0, err
+		}
+
+		abstractRex := regexp.MustCompile(`(?:type)(\s)*\w+(\s)*(?:interface)(\s)*(?:\{)`)
+		matches := abstractRex.FindAllStringIndex(content, -1)
+		totalAbstractMembers += len(matches)
+	}
+	return totalAbstractMembers, nil
+}
+
+func (g *GoFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
+	var refPaths []string
+	for _, file := range module.SourceFiles {
+		content, err := file.Content()
+		if err != nil {
+			return refPaths, err
+		}
+
+		importRegex := regexp.MustCompile(`(\".+\"\n)|(\n(\s*)\".+\"\n)`)
+		matches := importRegex.FindAllStringSubmatch(content, -1)
+		for i := range matches {
+			normalizeRegex := regexp.MustCompile(`\"(.+?)\"`)
+			refPaths = append(refPaths, normalizeRegex.FindStringSubmatch(matches[i][0])[1])
+		}
+	}
+	return refPaths, nil
 }
