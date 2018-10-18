@@ -25,14 +25,14 @@ func TestModules_Load(t *testing.T) {
 	moduleA := modules.GetModuleByPath("/src/a")
 	assert.Equal(t, 2, moduleA.AbstractMember)
 	assert.Equal(t, 2, moduleA.ConcreteMember)
-	assert.Equal(t, 1, moduleA.FanInDep)
-	assert.Equal(t, 0, moduleA.FanOutDep)
+	assert.Equal(t, 1, moduleA.FanOutDep)
+	assert.Equal(t, 0, moduleA.FanInDep)
 
 	moduleB := modules.GetModuleByPath("/src/b")
 	assert.Equal(t, 2, moduleB.AbstractMember)
 	assert.Equal(t, 2, moduleB.ConcreteMember)
-	assert.Equal(t, 1, moduleB.FanInDep)  // +1 by impl of mock when load B
-	assert.Equal(t, 2, moduleB.FanOutDep) // +1 ref from A & +1 by impl of mock when load B
+	assert.Equal(t, 1, moduleB.FanOutDep) // +1 ref from A & +1 by impl of mock when load B
+	assert.Equal(t, 2, moduleB.FanInDep)  // +1 by impl of mock when load B
 }
 
 func fakeLoadableModules() src.Modules {

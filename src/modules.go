@@ -36,9 +36,9 @@ func (m *Modules) Load(loader Loader) error {
 		module.AbstractMember, _ = loader.CountAbstractMembers(module)
 		refPaths, _ := loader.ReferenceToPaths(module)
 		for _, path := range refPaths {
-			module.FanInDep += 1
+			module.FanOutDep += 1
 			if refModule := m.GetModuleByPath(path); refModule != nil {
-				refModule.FanOutDep += 1
+				refModule.FanInDep += 1
 			}
 		}
 	}

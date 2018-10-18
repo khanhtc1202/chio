@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	pwd := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/chio"
+	pwd := "/Users/khanh.tran/workspace/go/src/github.com/khanhtc1202/boogeyman"
 
 	moduleFact := src.NewModuleFactory()
 
