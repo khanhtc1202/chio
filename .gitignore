@@ -13,5 +13,6 @@
 
 bin/*
 !bin/.gitkeep
+!bin/chio*
 .idea/
 vendor/
