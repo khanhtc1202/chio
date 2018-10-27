@@ -6,9 +6,11 @@ import (
 	"flag"
 
 	"os"
-	"github.com/khanhtc1202/chio/src"
-	"github.com/olekukonko/tablewriter"
 	"strings"
+
+	"github.com/khanhtc1202/chio/src"
+	"github.com/khanhtc1202/chio/src/loaders"
+	"github.com/olekukonko/tablewriter"
 )
 
 type CommandParams struct {
@@ -72,7 +74,7 @@ func main() {
 	}
 
 	// loader object by language
-	loader := src.LoaderFactory(language)
+	loader := loaders.LoaderFactory(language)
 
 	// load modules
 	modules.Load(loader)

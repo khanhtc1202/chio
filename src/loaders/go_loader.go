@@ -1,29 +1,16 @@
-package src
+package loaders
 
 import (
 	"regexp"
 	"strings"
+
+	"github.com/khanhtc1202/chio/src"
 )
-
-type Loader interface {
-	CountConcreteMembers(*Module) (int, error)
-	CountAbstractMembers(*Module) (int, error)
-	ReferenceToPaths(*Module) ([]string, error)
-}
-
-func LoaderFactory(lang LanguageType) Loader {
-	switch lang {
-	case GO:
-		return &GoFileLoader{}
-	default:
-		return &GoFileLoader{}
-	}
-}
 
 type GoFileLoader struct {
 }
 
-func (g *GoFileLoader) CountConcreteMembers(module *Module) (int, error) {
+func (g *GoFileLoader) CountConcreteMembers(module *src.Module) (int, error) {
 	totalConcreteMembers := 0
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {
@@ -42,7 +29,7 @@ func (g *GoFileLoader) CountConcreteMembers(module *Module) (int, error) {
 	return totalConcreteMembers, nil
 }
 
-func (g *GoFileLoader) CountAbstractMembers(module *Module) (int, error) {
+func (g *GoFileLoader) CountAbstractMembers(module *src.Module) (int, error) {
 	totalAbstractMembers := 0
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {
@@ -61,7 +48,7 @@ func (g *GoFileLoader) CountAbstractMembers(module *Module) (int, error) {
 	return totalAbstractMembers, nil
 }
 
-func (g *GoFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
+func (g *GoFileLoader) ReferenceToPaths(module *src.Module) ([]string, error) {
 	var refPaths []string
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {
@@ -81,22 +68,4 @@ func (g *GoFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
 		}
 	}
 	return refPaths, nil
-}
-
-type JavaFileLoader struct {
-}
-
-func (j *JavaFileLoader) CountConcreteMembers(module *Module) (int, error) {
-	// TODO
-	return 0, nil
-}
-
-func (j *JavaFileLoader) CountAbstractMembers(module *Module) (int, error) {
-	// TODO
-	return 0, nil
-}
-
-func (g *JavaFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
-	// TODO
-	return []string{}, nil
 }

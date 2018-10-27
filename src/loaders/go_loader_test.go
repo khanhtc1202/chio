@@ -1,4 +1,4 @@
-package src_test
+package loaders
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestGoFileLoader_CountConcreteMembers_Go(t *testing.T) {
-	fileLoader := &src.GoFileLoader{}
+	fileLoader := &GoFileLoader{}
 	target, err := fileLoader.CountConcreteMembers(targetModule())
 
 	assert.Nil(t, err)
@@ -16,15 +16,15 @@ func TestGoFileLoader_CountConcreteMembers_Go(t *testing.T) {
 }
 
 func TestGoFileLoader_CountAbstractMembers_Go(t *testing.T) {
-	fileLoader := &src.GoFileLoader{}
+	fileLoader := &GoFileLoader{}
 	target, err := fileLoader.CountAbstractMembers(targetModule())
 
 	assert.Nil(t, err)
-	assert.Equal(t, 1, target)
+	assert.Equal(t, 0, target)
 }
 
 func TestGoFileLoader_ReferenceToPaths_Go(t *testing.T) {
-	fileLoader := &src.GoFileLoader{}
+	fileLoader := &GoFileLoader{}
 	target, err := fileLoader.ReferenceToPaths(targetModule())
 
 	assert.Nil(t, err)
@@ -35,7 +35,7 @@ func targetModule() *src.Module {
 	return &src.Module{
 		SourceFiles: []*src.SourceFile{
 			{
-				Path: "./loader_factory.go",
+				Path: "./go_loader.go",
 			},
 		},
 	}
