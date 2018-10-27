@@ -82,3 +82,21 @@ func (g *GoFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
 	}
 	return refPaths, nil
 }
+
+type JavaFileLoader struct {
+}
+
+func (j *JavaFileLoader) CountConcreteMembers(module *Module) (int, error) {
+	// TODO
+	return 0, nil
+}
+
+func (j *JavaFileLoader) CountAbstractMembers(module *Module) (int, error) {
+	// TODO
+	return 0, nil
+}
+
+func (g *JavaFileLoader) ReferenceToPaths(module *Module) ([]string, error) {
+	// TODO
+	return []string{}, nil
+}
