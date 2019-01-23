@@ -15,9 +15,6 @@ func TestModules_Add_FailByAddEmptyModule(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
-func TestModules_GetModuleByPath_GetSubPath(t *testing.T) {
-}
-
 func TestModules_Load(t *testing.T) {
 	modules := fakeLoadableModules()
 	modules.Load(&MockLoaderRefToB{})
