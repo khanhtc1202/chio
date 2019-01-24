@@ -105,11 +105,5 @@ or check [Makefile](https://github.com/khanhtc1202/chio/blob/master/Makefile) fo
 
 All contributions will be welcome in this project.
 
-## Download
-
-For linux x64 : [download](https://github.com/khanhtc1202/chio/releases/download/0.0.1/chio-linux-64)
-
-For MacOS x64 : [download](https://github.com/khanhtc1202/chio/releases/download/0.0.1/chio-darwin-64)
-
 ## License
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
