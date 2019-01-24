@@ -82,7 +82,8 @@ Support language(s)
 - [ ] NodeJs
 
 Load module strategies
-- [x] Directory level (n-depth dir level, group files in same dir as a module)
+- [x] n-depth Directory level (group files in same dir as a module)
+- [ ] 1-depth Directory level (file as module)
 - [ ] File level (file as module)
 
 ## Run on local
