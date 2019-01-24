@@ -26,7 +26,7 @@ func (s *SourceFile) Name() string {
 	return file
 }
 
-func (s *SourceFile) GetDirPath() string {
+func (s *SourceFile) DirPath() string {
 	dir, _ := path.Split(s.Path)
 	return dir
 }

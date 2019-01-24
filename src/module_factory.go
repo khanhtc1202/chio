@@ -24,15 +24,15 @@ func (m *ModuleFactory) DirectoryAsModule(
 		return nil, err
 	}
 	for _, file := range files {
-		if modules.GetModuleByPath(file.GetDirPath()) == nil {
-			module := NewModule(file.GetDirPath())
-			module.AddSourceFile(file)
-			modules.Add(module)
+		if modules.GetModuleByPath(file.DirPath()) == nil {
+			module := NewModule(file.DirPath())
+			err = module.AddSourceFile(file)
+			err = modules.Add(module)
 		} else {
-			modules.GetModuleByPath(file.GetDirPath()).AddSourceFile(file)
+			err = modules.GetModuleByPath(file.DirPath()).AddSourceFile(file)
 		}
 	}
-	return modules, nil
+	return modules, err
 }
 
 func (m *ModuleFactory) loadModulesFiles(

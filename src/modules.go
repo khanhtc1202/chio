@@ -2,7 +2,6 @@ package src
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -14,7 +13,7 @@ func NewModules() Modules {
 
 func (m *Modules) Add(module *Module) error {
 	if module.RootPath == "" || len(module.SourceFiles) == 0 {
-		return errors.New(fmt.Sprintf("Error: Add empty module to modules list"))
+		return errors.New("add empty module to modules list")
 	}
 
 	(*m)[module.RootPath] = module
@@ -30,11 +29,14 @@ func (m *Modules) GetModuleByPath(path string) *Module {
 	return nil
 }
 
-func (m *Modules) Load(loader Loader) error {
+func (m *Modules) Load(loader Loader) (err error) {
 	for _, module := range *m {
-		module.ConcreteMember, _ = loader.CountConcreteMembers(module)
-		module.AbstractMember, _ = loader.CountAbstractMembers(module)
-		refPaths, _ := loader.ReferenceToPaths(module)
+		module.ConcreteMember, err = loader.CountConcreteMembers(module)
+		module.AbstractMember, err = loader.CountAbstractMembers(module)
+		refPaths, err := loader.ReferenceToPaths(module)
+		if err != nil {
+			return err
+		}
 		for _, path := range refPaths {
 			module.FanOutDep += 1
 			if refModule := m.GetModuleByPath(path); refModule != nil {
