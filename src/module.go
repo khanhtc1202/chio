@@ -29,7 +29,7 @@ func (m *Module) AddSourceFile(file *SourceFile) error {
 		return nil
 	}
 
-	return errors.New(fmt.Sprintf("Error: Add not contain file path to module: %s\n", m.RootPath))
+	return errors.New(fmt.Sprintf("add not contain file path to module: %s\n", m.RootPath))
 }
 
 func (m *Module) GetSourceFilesPath() []string {

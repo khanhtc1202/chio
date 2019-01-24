@@ -2,6 +2,7 @@ package src
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -13,7 +14,7 @@ func NewModules() Modules {
 
 func (m *Modules) Add(module *Module) error {
 	if module.RootPath == "" || len(module.SourceFiles) == 0 {
-		return errors.New("add empty module to modules list")
+		return errors.New(fmt.Sprintf("add empty module to modules list; Path: %s\n", module.RootPath))
 	}
 
 	(*m)[module.RootPath] = module
