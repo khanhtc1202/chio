@@ -1,6 +1,7 @@
 package src
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -39,7 +40,10 @@ func (m *ModuleFactory) loadModulesFiles(
 	language LanguageType,
 ) (SourceFiles, error) {
 	var files SourceFiles
-	filepath.Walk(dirPath, func(path string, f os.FileInfo, _ error) error {
+	filepath.Walk(dirPath, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return nil
+		}
 		if !f.IsDir() {
 			r, err := regexp.MatchString(language.Extension(), f.Name())
 			if err == nil && r {
@@ -48,5 +52,8 @@ func (m *ModuleFactory) loadModulesFiles(
 		}
 		return nil
 	})
+	if files == nil {
+		return nil, errors.New("try to load not existed or empty dir")
+	}
 	return files, nil
 }

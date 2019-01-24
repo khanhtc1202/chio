@@ -37,3 +37,12 @@ func TestModuleFactory_DirectoryAsModuleNoSubDir(t *testing.T) {
 		fmt.Println(files)
 	}
 }
+
+func TestModuleFactory_DirectoryAsModule_NotExistedDir(t *testing.T) {
+	rootPath := "./fff"
+
+	moduleFac := src.NewModuleFactory()
+	_, err := moduleFac.DirectoryAsModule(rootPath, src.GO)
+
+	assert.NotNil(t, err)
+}

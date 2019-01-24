@@ -70,7 +70,8 @@ func main() {
 	moduleFact := src.NewModuleFactory()
 	modules, err := moduleFact.DirectoryAsModule(srcPath, language)
 	if err != nil {
-		panic("Error on load modules")
+		fmt.Printf("Error: %s\n", err.Error())
+		os.Exit(1)
 	}
 
 	// loader object by language
