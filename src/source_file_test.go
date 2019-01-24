@@ -15,6 +15,14 @@ func TestSourceFile_GetDirPath(t *testing.T) {
 	assert.Equal(t, expected, dir)
 }
 
+func TestSourceFile_GetAbsoluteDirPath(t *testing.T) {
+	file := src.NewSourceFile("../sample/main.go")
+	expected := "/home/user/go/src/sample/"
+
+	dir := file.DirPath()
+	assert.NotEqual(t, expected, dir)
+}
+
 func TestSourceFile_Name(t *testing.T) {
 	file := src.NewSourceFile("/home/user/go/src/sample/main.go")
 	expected := "main.go"

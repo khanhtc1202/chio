@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"flag"
 
@@ -62,7 +63,7 @@ func print(srcPath string, modules src.Modules) {
 func main() {
 	cmdParams := parseParams()
 
-	srcPath := cmdParams.Path
+	srcPath, _ := filepath.Abs(cmdParams.Path)
 	language := src.ValueOfLanguage(cmdParams.Language)
 
 	// load dir level

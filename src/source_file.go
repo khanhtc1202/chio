@@ -2,7 +2,7 @@ package src
 
 import (
 	"io/ioutil"
-	"path"
+	"path/filepath"
 )
 
 type SourceFiles []*SourceFile
@@ -16,18 +16,20 @@ type SourceFile struct {
 }
 
 func NewSourceFile(path string) *SourceFile {
+	absPath, _ := filepath.Abs(path)
 	return &SourceFile{
-		Path: path,
+		Path: absPath,
 	}
 }
 
 func (s *SourceFile) Name() string {
-	_, file := path.Split(s.Path)
+	_, file := filepath.Split(s.Path)
 	return file
 }
 
 func (s *SourceFile) DirPath() string {
-	dir, _ := path.Split(s.Path)
+	absPath, _ := filepath.Abs(s.Path)
+	dir, _ := filepath.Split(absPath)
 	return dir
 }
 
