@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/fatih/color"
+
 	"flag"
 
 	"os"
@@ -32,6 +34,16 @@ func parseParams() *CommandParams {
 	}
 }
 
+func colorfulMetric(data float64) string {
+	if data < 0.3 {
+		return color.GreenString("%.3f", data)
+	}
+	if data < 0.6 {
+		return color.YellowString("%.3f", data)
+	}
+	return color.RedString("%.3f", data)
+}
+
 func print(srcPath string, modules src.Modules) {
 	var data [][]string
 
@@ -43,9 +55,9 @@ func print(srcPath string, modules src.Modules) {
 			fmt.Sprintf("%d", module.AbstractMember),
 			fmt.Sprintf("%d", module.FanInDep),
 			fmt.Sprintf("%d", module.FanOutDep),
-			fmt.Sprintf("%.3f", module.Abstractness()),
-			fmt.Sprintf("%.3f", module.Instability()),
-			fmt.Sprintf("%.3f", module.Distance()),
+			colorfulMetric(module.Abstractness()),
+			colorfulMetric(module.Instability()),
+			colorfulMetric(module.Distance()),
 		}
 
 		data = append(data, row)
