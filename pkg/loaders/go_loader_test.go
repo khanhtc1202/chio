@@ -3,7 +3,7 @@ package loaders
 import (
 	"testing"
 
-	"github.com/khanhtc1202/chio/src"
+	"github.com/khanhtc1202/chio/pkg"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,9 +31,9 @@ func TestGoFileLoader_ReferenceToPaths_Go(t *testing.T) {
 	assert.Equal(t, "regexp", target[0])
 }
 
-func targetModule() *src.Module {
-	return &src.Module{
-		SourceFiles: []*src.SourceFile{
+func targetModule() *pkg.Module {
+	return &pkg.Module{
+		SourceFiles: []*pkg.SourceFile{
 			{
 				Path: "./go_loader.go",
 			},

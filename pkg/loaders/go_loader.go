@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/khanhtc1202/chio/src"
+	"github.com/khanhtc1202/chio/pkg"
 )
 
 var (
@@ -17,7 +17,7 @@ var (
 type GoFileLoader struct {
 }
 
-func (g *GoFileLoader) CountConcreteMembers(module *src.Module) (int, error) {
+func (g *GoFileLoader) CountConcreteMembers(module *pkg.Module) (int, error) {
 	totalConcreteMembers := 0
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {
@@ -35,7 +35,7 @@ func (g *GoFileLoader) CountConcreteMembers(module *src.Module) (int, error) {
 	return totalConcreteMembers, nil
 }
 
-func (g *GoFileLoader) CountAbstractMembers(module *src.Module) (int, error) {
+func (g *GoFileLoader) CountAbstractMembers(module *pkg.Module) (int, error) {
 	totalAbstractMembers := 0
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {
@@ -53,7 +53,7 @@ func (g *GoFileLoader) CountAbstractMembers(module *src.Module) (int, error) {
 	return totalAbstractMembers, nil
 }
 
-func (g *GoFileLoader) ReferenceToPaths(module *src.Module) ([]string, error) {
+func (g *GoFileLoader) ReferenceToPaths(module *pkg.Module) ([]string, error) {
 	var refPaths []string
 	for _, file := range module.SourceFiles {
 		if strings.Contains(file.Name(), "test") {

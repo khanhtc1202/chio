@@ -1,4 +1,4 @@
-package src
+package pkg
 
 type Loader interface {
 	CountConcreteMembers(*Module) (int, error)

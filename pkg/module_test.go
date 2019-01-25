@@ -1,15 +1,15 @@
-package src_test
+package pkg_test
 
 import (
 	"testing"
 
-	"github.com/khanhtc1202/chio/src"
+	"github.com/khanhtc1202/chio/pkg"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
-	emptyModule := src.NewModule("/home/user/go/src/sample/")
-	file := src.NewSourceFile("/home/user/go/src/sample/main.go")
+	emptyModule := pkg.NewModule("/home/user/go/src/sample/")
+	file := pkg.NewSourceFile("/home/user/go/src/sample/main.go")
 
 	err := emptyModule.AddSourceFile(file)
 	assert.Nil(t, err)
@@ -17,9 +17,9 @@ func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
 }
 
 func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
-	emptyModule := src.NewModule("/home/user/go/src/sample/")
-	file1 := src.NewSourceFile("/home/user/go/src/sample/main.go")
-	file2 := src.NewSourceFile("/home/user/go/src/sample/submodule/sample.go")
+	emptyModule := pkg.NewModule("/home/user/go/src/sample/")
+	file1 := pkg.NewSourceFile("/home/user/go/src/sample/main.go")
+	file2 := pkg.NewSourceFile("/home/user/go/src/sample/submodule/sample.go")
 
 	err := emptyModule.AddSourceFile(file1)
 	err = emptyModule.AddSourceFile(file2)
@@ -28,8 +28,8 @@ func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
 }
 
 func TestModule_GetSourceFilesPath(t *testing.T) {
-	emptyModule := src.NewModule("/home/user/go/src/sample/")
-	file1 := src.NewSourceFile("/home/user/go/src/sample/main.go")
+	emptyModule := pkg.NewModule("/home/user/go/src/sample/")
+	file1 := pkg.NewSourceFile("/home/user/go/src/sample/main.go")
 	_ = emptyModule.AddSourceFile(file1)
 
 	filesPath := emptyModule.GetSourceFilesPath()

@@ -5,7 +5,7 @@ REVISION := $(shell git rev-parse --short HEAD)
 BUILDDATE := $(shell date '+%Y/%m/%d %H:%M:%S %Z')
 GOVERSION := $(shell go version)
 LDFLAGS := -X 'main.revision=$(REVISION)' -X 'main.version=$(VERSION)' -X 'main.buildDate=$(BUILDDATE)' -X 'main.goVersion=$(GOVERSION)'
-ENTRYPOINT := main.go
+ENTRYPOINT := ./cmd/main.go
 
 all: dep production
 
@@ -25,7 +25,7 @@ build-%:
 
 # test
 test-%:
-	go test -tags="$* netgo" ./...
+	go test -tags="$* netgo" -count=1 ./{cmd,pkg}
 
 update:
 	dep ensure -update

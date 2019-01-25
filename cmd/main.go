@@ -11,8 +11,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/khanhtc1202/chio/src"
-	"github.com/khanhtc1202/chio/src/loaders"
+	"github.com/khanhtc1202/chio/pkg"
+	"github.com/khanhtc1202/chio/pkg/loaders"
 	"github.com/olekukonko/tablewriter"
 )
 
@@ -44,7 +44,7 @@ func colorfulMetric(data float64) string {
 	return color.RedString("%.3f", data)
 }
 
-func print(srcPath string, modules src.Modules) {
+func print(srcPath string, modules pkg.Modules) {
 	var data [][]string
 
 	for _, module := range modules {
@@ -76,11 +76,11 @@ func main() {
 	cmdParams := parseParams()
 
 	srcPath, _ := filepath.Abs(cmdParams.Path)
-	language := src.ValueOfLanguage(cmdParams.Language)
+	language := pkg.ValueOfLanguage(cmdParams.Language)
 
 	// load dir level
 	// TODO move to command params
-	moduleFact := src.NewModuleFactory()
+	moduleFact := pkg.NewModuleFactory()
 	modules, err := moduleFact.DirectoryAsModule(srcPath, language)
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())

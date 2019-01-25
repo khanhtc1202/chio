@@ -1,15 +1,15 @@
-package src_test
+package pkg_test
 
 import (
 	"testing"
 
-	"github.com/khanhtc1202/chio/src"
+	"github.com/khanhtc1202/chio/pkg"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestModules_Add_FailByAddEmptyModule(t *testing.T) {
-	modules := src.NewModules()
-	module := src.NewModule("/")
+	modules := pkg.NewModules()
+	module := pkg.NewModule("/")
 
 	err := modules.Add(module)
 	assert.NotNil(t, err)
@@ -32,10 +32,10 @@ func TestModules_Load(t *testing.T) {
 	assert.Equal(t, 2, moduleB.FanInDep)  // +1 by impl of mock when load B
 }
 
-func fakeLoadableModules() src.Modules {
-	modules := src.NewModules()
-	moduleB := src.NewModule("/src/b")
-	moduleA := src.NewModule("/src/a")
+func fakeLoadableModules() pkg.Modules {
+	modules := pkg.NewModules()
+	moduleB := pkg.NewModule("/src/b")
+	moduleA := pkg.NewModule("/src/a")
 
 	modules[moduleB.RootPath] = moduleB
 	modules[moduleA.RootPath] = moduleA
@@ -44,15 +44,15 @@ func fakeLoadableModules() src.Modules {
 
 // ref to module B loader
 type MockLoaderRefToB struct {
-	src.Loader
+	pkg.Loader
 }
 
-func (m *MockLoaderRefToB) CountConcreteMembers(*src.Module) (int, error) {
+func (m *MockLoaderRefToB) CountConcreteMembers(*pkg.Module) (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToB) CountAbstractMembers(*src.Module) (int, error) {
+func (m *MockLoaderRefToB) CountAbstractMembers(*pkg.Module) (int, error) {
 	return 2, nil
 }
-func (m *MockLoaderRefToB) ReferenceToPaths(*src.Module) ([]string, error) {
+func (m *MockLoaderRefToB) ReferenceToPaths(*pkg.Module) ([]string, error) {
 	return []string{"/src/b"}, nil
 }
