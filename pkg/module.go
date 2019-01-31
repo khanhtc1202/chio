@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"path/filepath"
 	"strings"
 )
 
@@ -17,8 +18,9 @@ type Module struct {
 }
 
 func NewModule(rootPath string) *Module {
+	absPath, _ := filepath.Abs(rootPath)
 	return &Module{
-		RootPath:    rootPath,
+		RootPath:    absPath + "/", // module dir path end with '/'
 		SourceFiles: EmptySourceFiles(),
 	}
 }
