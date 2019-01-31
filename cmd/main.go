@@ -80,8 +80,8 @@ func main() {
 
 	// load dir level
 	// TODO move to command params
-	moduleFact := pkg.NewModuleFactory()
-	modules, err := moduleFact.DirectoryAsModule(srcPath, language)
+	moduleFact := pkg.NewNDepthDirectoryAsModule(srcPath)
+	modules, err := moduleFact.Load(language)
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())
 		os.Exit(1)

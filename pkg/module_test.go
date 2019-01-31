@@ -13,7 +13,7 @@ func TestModule_AddSourceFile_FirstTimeAddFileToEmptyModule(t *testing.T) {
 
 	err := emptyModule.AddSourceFile(file)
 	assert.Nil(t, err)
-	assert.Equal(t, "/home/user/go/src/sample/", emptyModule.RootPath)
+	assert.Equal(t, "/home/user/go/src/sample", emptyModule.RootPath)
 }
 
 func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
@@ -24,7 +24,7 @@ func TestModule_AddSourceFile_AddFileToExistedModule(t *testing.T) {
 	err := emptyModule.AddSourceFile(file1)
 	err = emptyModule.AddSourceFile(file2)
 	assert.Nil(t, err)
-	assert.Equal(t, "/home/user/go/src/sample/", emptyModule.RootPath)
+	assert.Equal(t, "/home/user/go/src/sample", emptyModule.RootPath)
 }
 
 func TestModule_GetSourceFilesPath(t *testing.T) {
@@ -34,4 +34,17 @@ func TestModule_GetSourceFilesPath(t *testing.T) {
 
 	filesPath := emptyModule.GetSourceFilesPath()
 	assert.Equal(t, "/home/user/go/src/sample/main.go", filesPath[0])
+}
+
+func TestModule_AddSourceFiles(t *testing.T) {
+	emptyModule := pkg.NewModule("/home/user/go/src/sample/")
+	files := pkg.SourceFiles{
+		pkg.NewSourceFile("/home/user/go/src/sample/main.go"),
+		pkg.NewSourceFile("/home/user/go/src/sample/sample.go"),
+		pkg.NewSourceFile("/home/user/go/src/sample/sub_dir/main.go"),
+	}
+
+	err := emptyModule.AddSourceFiles(files)
+	assert.Nil(t, err)
+	assert.Equal(t, 3, len(emptyModule.SourceFiles))
 }

@@ -2,24 +2,27 @@ package pkg
 
 import (
 	"errors"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 )
 
-type ModuleFactory struct {
+type NDepthDirectoryAsModule struct {
+	moduleFactory
 }
 
-func NewModuleFactory() *ModuleFactory {
-	return &ModuleFactory{}
+func NewNDepthDirectoryAsModule(path string) *NDepthDirectoryAsModule {
+	return &NDepthDirectoryAsModule{
+		moduleFactory{modulePath: path},
+	}
 }
 
-func (m *ModuleFactory) DirectoryAsModule(
-	rootPath string,
+func (m *NDepthDirectoryAsModule) Load(
 	language LanguageType,
 ) (Modules, error) {
 	modules := NewModules()
-	files, err := m.loadModulesFiles(rootPath, language)
+	files, err := m.loadModulesFiles(language)
 	if err != nil {
 		return nil, err
 	}
@@ -35,12 +38,55 @@ func (m *ModuleFactory) DirectoryAsModule(
 	return modules, err
 }
 
-func (m *ModuleFactory) loadModulesFiles(
-	dirPath string,
+type OneDepthDirectoryAsModule struct {
+	moduleFactory
+}
+
+func NewOneDepthDirectoryAsModule(path string) *OneDepthDirectoryAsModule {
+	return &OneDepthDirectoryAsModule{
+		moduleFactory{modulePath: path},
+	}
+}
+
+func (m *OneDepthDirectoryAsModule) Load(
+	language LanguageType,
+) (Modules, error) {
+	modules := NewModules()
+
+	ioFiles, err := ioutil.ReadDir(m.modulePath)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, fileInfo := range ioFiles {
+		if fileInfo.IsDir() {
+			subModulePath := filepath.Join(m.modulePath, fileInfo.Name())
+			fac := &moduleFactory{modulePath: subModulePath}
+			files, err := fac.loadModulesFiles(language)
+			if err != nil {
+				return nil, err
+			}
+			module := NewModule(subModulePath)
+			err = module.AddSourceFiles(files)
+			if err != nil {
+				return nil, err
+			}
+			err = modules.Add(module)
+		}
+	}
+
+	return modules, nil
+}
+
+type moduleFactory struct {
+	modulePath string
+}
+
+func (m *moduleFactory) loadModulesFiles(
 	language LanguageType,
 ) (SourceFiles, error) {
 	var files SourceFiles
-	filepath.Walk(dirPath, func(path string, f os.FileInfo, err error) error {
+	filepath.Walk(m.modulePath, func(path string, f os.FileInfo, err error) error {
 		if err != nil {
 			return nil
 		}
