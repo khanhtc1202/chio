@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"path/filepath"
 	"strings"
 )
 
@@ -17,8 +18,9 @@ type Module struct {
 }
 
 func NewModule(rootPath string) *Module {
+	absPath, _ := filepath.Abs(rootPath)
 	return &Module{
-		RootPath:    rootPath,
+		RootPath:    absPath,
 		SourceFiles: EmptySourceFiles(),
 	}
 }
@@ -30,6 +32,16 @@ func (m *Module) AddSourceFile(file *SourceFile) error {
 	}
 
 	return errors.New(fmt.Sprintf("add not contain file path to module: %s\n", m.RootPath))
+}
+
+func (m *Module) AddSourceFiles(files SourceFiles) error {
+	for _, file := range files {
+		err := m.AddSourceFile(file)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (m *Module) GetSourceFilesPath() []string {
