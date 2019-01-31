@@ -20,7 +20,11 @@ type Module struct {
 func NewModule(rootPath string) *Module {
 	absPath, _ := filepath.Abs(rootPath)
 	return &Module{
+<<<<<<< HEAD
 		RootPath:    absPath + "/", // module dir path end with '/'
+=======
+		RootPath:    absPath,
+>>>>>>> 7cae6a0c7f1057cbc163dd35969511074d6f8c1e
 		SourceFiles: EmptySourceFiles(),
 	}
 }
