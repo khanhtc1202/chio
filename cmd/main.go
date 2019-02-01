@@ -83,10 +83,6 @@ func main() {
 
 	srcPath, _ := filepath.Abs(cmdParams.Path)
 	language := pkg.ValueOfLanguage(cmdParams.Language)
-
-	// load dir level
-	// TODO move to command params
-	//moduleFact := pkg.NewNDepthDirectoryAsModule(srcPath)
 	moduleFact := pkg.ModuleFactoryBySign(cmdParams.Depth, srcPath)
 
 	modules, err := moduleFact.Load(language)
