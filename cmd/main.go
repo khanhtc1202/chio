@@ -19,18 +19,24 @@ import (
 type CommandParams struct {
 	Path     string
 	Language string
+	Depth    string
 }
 
 func parseParams() *CommandParams {
 	var modulePath string
+	var language string
+	var depth string
+
 	flag.StringVar(&modulePath, "p", ".", "path to module")
-	language := flag.String("l", "go", "language(s): go")
+	flag.StringVar(&language, "l", "go", "language(s): go")
+	flag.StringVar(&depth, "d", "n", "dir as module, default n-depth (n)")
 
 	flag.Parse()
 
 	return &CommandParams{
 		Path:     modulePath,
-		Language: *language,
+		Language: language,
+		Depth:    depth,
 	}
 }
 
@@ -80,7 +86,9 @@ func main() {
 
 	// load dir level
 	// TODO move to command params
-	moduleFact := pkg.NewNDepthDirectoryAsModule(srcPath)
+	//moduleFact := pkg.NewNDepthDirectoryAsModule(srcPath)
+	moduleFact := pkg.ModuleFactoryBySign(cmdParams.Depth, srcPath)
+
 	modules, err := moduleFact.Load(language)
 	if err != nil {
 		fmt.Printf("Error: %s\n", err.Error())

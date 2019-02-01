@@ -2,11 +2,25 @@ package pkg
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 )
+
+type ModuleFactory interface {
+	Load(LanguageType) (Modules, error)
+}
+
+func ModuleFactoryBySign(sign, path string) ModuleFactory {
+	switch sign {
+	case "1":
+		return NewOneDepthDirectoryAsModule(path)
+	default:
+		return NewNDepthDirectoryAsModule(path)
+	}
+}
 
 type NDepthDirectoryAsModule struct {
 	moduleFactory
@@ -64,7 +78,7 @@ func (m *OneDepthDirectoryAsModule) Load(
 			fac := &moduleFactory{modulePath: subModulePath}
 			files, err := fac.loadModulesFiles(language)
 			if err != nil {
-				return nil, err
+				continue
 			}
 			module := NewModule(subModulePath)
 			err = module.AddSourceFiles(files)
@@ -99,7 +113,7 @@ func (m *moduleFactory) loadModulesFiles(
 		return nil
 	})
 	if files == nil {
-		return nil, errors.New("try to load not existed or empty dir")
+		return nil, errors.New(fmt.Sprintf("try to load not existed or empty dir: %s", m.modulePath))
 	}
 	return files, nil
 }
