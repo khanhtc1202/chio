@@ -32,25 +32,17 @@ This metric has the range [0, 1]. D = 0 implies that the module lies in that pla
 Example output metrics extracted from [boogeyman repo](https://github.com/khanhtc1202/boogeyman)
 
 ```bash
-+---------------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
-|           MODULE PATH           | FILES | CONCRETE | ABSTRACT | FANIN | FANOUT | ABSTRACTNESS | INSTABILITY | DISTANCE |
-+---------------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
-| /infrastructure/cmd/data/       |     1 |        1 |        0 |     1 |      0 |        0.000 |       0.000 |    1.000 |
-| /infrastructure/meta_info/      |     1 |        1 |        0 |     0 |      1 |        0.000 |       1.000 |    0.000 |
-| /usecase/presenter/             |     1 |        0 |        1 |     2 |      1 |        1.000 |       0.333 |    0.333 |
-| /adapter/persistent/repository/ |     2 |        1 |        0 |     0 |      3 |        0.000 |       1.000 |    0.000 |
-| /domain/                        |    12 |        4 |        0 |    11 |     12 |        0.000 |       0.522 |    0.478 |
-| /infrastructure/io/             |     1 |        1 |        0 |     4 |      3 |        0.000 |       0.429 |    0.571 |
-| /usecase/interactor/            |     2 |        1 |        0 |     1 |      5 |        0.000 |       0.833 |    0.167 |
-| /usecase/repository/            |     1 |        0 |        1 |     4 |      1 |        1.000 |       0.200 |    0.200 |
-| /adapter/presenter/console/     |     1 |        1 |        0 |     0 |      4 |        0.000 |       1.000 |    0.000 |
-| /adapter/persistent/service/    |     1 |        0 |        1 |     1 |      1 |        1.000 |       0.500 |    0.500 |
-| /config/                        |     5 |        5 |        0 |     1 |     13 |        0.000 |       0.929 |    0.071 |
-| /cross_cutting/io/              |     2 |        0 |        1 |     4 |      2 |        1.000 |       0.333 |    0.333 |
-| /infrastructure/service/        |     8 |        4 |        0 |     0 |     26 |        0.000 |       1.000 |    0.000 |
-| /adapter/controller/            |     1 |        1 |        0 |     0 |      4 |        0.000 |       1.000 |    0.000 |
-| /infrastructure/cmd/            |     1 |        1 |        0 |     0 |      2 |        0.000 |       1.000 |    0.000 |
-+---------------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
++------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
+|   MODULE PATH    | FILES | CONCRETE | ABSTRACT | FANIN | FANOUT | ABSTRACTNESS | INSTABILITY | DISTANCE |
++------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
+| /adapter/        |     5 |        3 |        1 |     0 |     13 | 0.250        | 1.000       | 0.250    |
+| /config/         |     5 |        5 |        0 |     1 |     13 | 0.000        | 0.929       | 0.071    |
+| /cross_cutting/  |     2 |        0 |        1 |     5 |      2 | 1.000        | 0.286       | 0.286    |
+| /domain/         |    13 |        3 |        1 |    11 |     12 | 0.250        | 0.522       | 0.228    |
+| /infrastructure/ |    12 |        8 |        0 |     0 |     32 | 0.000        | 1.000       | 0.000    |
+| /usecase/        |     4 |        1 |        2 |     0 |      7 | 0.667        | 1.000       | 0.667    |
++------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
+
 ```
 
 ## Usage
@@ -60,17 +52,20 @@ In case exec file you downloaded's name is `chio`.
 Sample full params command
 
 ```bash
-$ ./chio -l go -p ./
+$ ./chio -l go -p ./ -d 1
 ```
 
 Type `-h` to get help. Return value be like
 
 ```$xslt
-Usage of ./chio:
+Usage of ./bin/chio-darwin-64:
+  -d string
+        dir as module, default n-depth (n) (default "n")
   -l string
-    language(s): go (default "go")
+        language(s): go (default "go")
   -p string
-    path to module (default ".")
+        path to module (default ".")
+
 ```
 
 
