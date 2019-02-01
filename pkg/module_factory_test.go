@@ -8,14 +8,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
+func TestModuleFactory_NDepthDirectoryAsModule_ComplexModule(t *testing.T) {
 	rootPath := "../sample"
 
-	moduleFac := pkg.NewModuleFactory()
-	modules, err := moduleFac.DirectoryAsModule(rootPath, pkg.GO)
+	moduleFac := pkg.NewNDepthDirectoryAsModule(rootPath)
+	modules, err := moduleFac.Load(pkg.GO)
 
 	assert.Nil(t, err)
-	assert.NotEqual(t, 0, len(modules))
+	assert.Equal(t, 4, len(modules))
 
 	for _, module := range modules {
 		files := module.GetSourceFilesPath()
@@ -23,14 +23,14 @@ func TestModuleFactory_DirectoryAsModuleFileLevel(t *testing.T) {
 	}
 }
 
-func TestModuleFactory_DirectoryAsModuleNoSubDir(t *testing.T) {
+func TestModuleFactory_NDepthDirectoryAsModule_NoSubDir(t *testing.T) {
 	rootPath := "../sample/sub"
 
-	moduleFac := pkg.NewModuleFactory()
-	modules, err := moduleFac.DirectoryAsModule(rootPath, pkg.GO)
+	moduleFac := pkg.NewNDepthDirectoryAsModule(rootPath)
+	modules, err := moduleFac.Load(pkg.GO)
 
 	assert.Nil(t, err)
-	assert.NotEqual(t, 0, len(modules))
+	assert.Equal(t, 1, len(modules))
 
 	for _, module := range modules {
 		files := module.GetSourceFilesPath()
@@ -38,11 +38,26 @@ func TestModuleFactory_DirectoryAsModuleNoSubDir(t *testing.T) {
 	}
 }
 
-func TestModuleFactory_DirectoryAsModule_NotExistedDir(t *testing.T) {
+func TestModuleFactory_NDepthDirectoryAsModule_NotExistedDir(t *testing.T) {
 	rootPath := "./fff"
 
-	moduleFac := pkg.NewModuleFactory()
-	_, err := moduleFac.DirectoryAsModule(rootPath, pkg.GO)
+	moduleFac := pkg.NewNDepthDirectoryAsModule(rootPath)
+	_, err := moduleFac.Load(pkg.GO)
 
 	assert.NotNil(t, err)
+}
+
+func TestModuleFactory_OneDepthDirectoryAsModule_ComplexModule(t *testing.T) {
+	rootPath := "../sample"
+
+	moduleFac := pkg.NewOneDepthDirectoryAsModule(rootPath)
+	modules, err := moduleFac.Load(pkg.GO)
+
+	assert.Nil(t, err)
+	assert.Equal(t, 2, len(modules))
+
+	for _, module := range modules {
+		files := module.GetSourceFilesPath()
+		fmt.Println(files)
+	}
 }

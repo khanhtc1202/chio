@@ -35,3 +35,16 @@ func TestModule_GetSourceFilesPath(t *testing.T) {
 	filesPath := emptyModule.GetSourceFilesPath()
 	assert.Equal(t, "/home/user/go/src/sample/main.go", filesPath[0])
 }
+
+func TestModule_AddSourceFiles(t *testing.T) {
+	emptyModule := pkg.NewModule("/home/user/go/src/sample/")
+	files := pkg.SourceFiles{
+		pkg.NewSourceFile("/home/user/go/src/sample/main.go"),
+		pkg.NewSourceFile("/home/user/go/src/sample/sample.go"),
+		pkg.NewSourceFile("/home/user/go/src/sample/sub_dir/main.go"),
+	}
+
+	err := emptyModule.AddSourceFiles(files)
+	assert.Nil(t, err)
+	assert.Equal(t, 3, len(emptyModule.SourceFiles))
+}

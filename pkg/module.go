@@ -34,6 +34,16 @@ func (m *Module) AddSourceFile(file *SourceFile) error {
 	return errors.New(fmt.Sprintf("add not contain file path to module: %s\n", m.RootPath))
 }
 
+func (m *Module) AddSourceFiles(files SourceFiles) error {
+	for _, file := range files {
+		err := m.AddSourceFile(file)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (m *Module) GetSourceFilesPath() []string {
 	var filesPath []string
 	for _, path := range m.SourceFiles {
