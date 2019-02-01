@@ -83,7 +83,7 @@ Support language(s)
 
 Load module strategies
 - [x] n-depth Directory level (group files in same dir as a module)
-- [ ] 1-depth Directory level
+- [x] 1-depth Directory level
 - [ ] File level (file as module)
 
 ## Run on local
