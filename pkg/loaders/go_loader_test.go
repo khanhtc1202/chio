@@ -31,11 +31,29 @@ func TestGoFileLoader_ReferenceToPaths_Go(t *testing.T) {
 	assert.Equal(t, "regexp", target[0])
 }
 
+func TestGoFileLoader_ReferenceToPaths_HasAliasImport(t *testing.T) {
+	fileLoader := &GoFileLoader{}
+	target, err := fileLoader.ReferenceToPaths(hasAliasImportModule())
+
+	assert.Nil(t, err)
+	assert.Equal(t, "fmt", target[0])
+}
+
 func targetModule() *pkg.Module {
 	return &pkg.Module{
 		SourceFiles: []*pkg.SourceFile{
 			{
 				Path: "./go_loader.go",
+			},
+		},
+	}
+}
+
+func hasAliasImportModule() *pkg.Module {
+	return &pkg.Module{
+		SourceFiles: []*pkg.SourceFile{
+			{
+				Path: "../../sample/sample.go",
 			},
 		},
 	}
