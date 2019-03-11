@@ -29,20 +29,21 @@ This metric has the range [0, 1]. D = 0 implies that the module lies in that pla
 
 ![](https://user-images.githubusercontent.com/32532742/43695838-e64283f0-9975-11e8-8a9d-8d6d64f87437.png)
 
-Example output metrics extracted from [boogeyman repo](https://github.com/khanhtc1202/boogeyman)
+Example output metrics extracted from [boogeyman repo](https://github.com/khanhtc1202/boogeyman/internal)
 
 ```bash
-+------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
-|   MODULE PATH    | FILES | CONCRETE | ABSTRACT | FANIN | FANOUT | ABSTRACTNESS | INSTABILITY | DISTANCE |
-+------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
-| /adapter/        |     5 |        3 |        1 |     0 |     13 | 0.250        | 1.000       | 0.250    |
-| /config/         |     5 |        5 |        0 |     1 |     13 | 0.000        | 0.929       | 0.071    |
-| /cross_cutting/  |     2 |        0 |        1 |     5 |      2 | 1.000        | 0.286       | 0.286    |
-| /domain/         |    13 |        3 |        1 |    11 |     12 | 0.250        | 0.522       | 0.228    |
-| /infrastructure/ |    12 |        8 |        0 |     0 |     32 | 0.000        | 1.000       | 0.000    |
-| /usecase/        |     4 |        1 |        2 |     0 |      7 | 0.667        | 1.000       | 0.667    |
-+------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
-
++--------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
+|       MODULE PATH        | FILES | CONCRETE | ABSTRACT | FANIN | FANOUT | ABSTRACTNESS | INSTABILITY | DISTANCE |
++--------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
+| /domain/                 |     9 |        5 |        2 |    12 |     15 | 0.286        | 0.556       | 0.159    |
+| /gateway/repository/     |     4 |        2 |        0 |     1 |      6 | 0.000        | 0.857       | 0.143    |
+| /gateway/service/        |     1 |        0 |        1 |     1 |      1 | 1.000        | 0.500       | 0.500    |
+| /infrastructure/service/ |     8 |        4 |        0 |     1 |     26 | 0.000        | 0.963       | 0.037    |
+| /usecase/interactor/     |     1 |        1 |        0 |     1 |      4 | 0.000        | 0.800       | 0.200    |
+| /usecase/presenter/      |     1 |        0 |        1 |     2 |      1 | 1.000        | 0.333       | 0.333    |
+| /usecase/repository/     |     2 |        0 |        2 |     5 |      2 | 1.000        | 0.286       | 0.286    |
+| /controller/             |     1 |        1 |        0 |     0 |      4 | 0.000        | 1.000       | 0.000    |
++--------------------------+-------+----------+----------+-------+--------+--------------+-------------+----------+
 ```
 
 ## Usage
@@ -78,7 +79,7 @@ Support language(s)
 
 Load module strategies
 - [x] n-depth Directory level (group files in same dir as a module)
-- [x] 1-depth Directory level
+- [ ] 1-depth Directory level (WIP)
 
 ## Run on local
 
