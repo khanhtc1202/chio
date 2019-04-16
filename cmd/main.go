@@ -61,8 +61,8 @@ func print(srcPath string, modules pkg.Modules) {
 			fmt.Sprintf("%d", module.AbstractMember),
 			fmt.Sprintf("%d", module.FanInDep),
 			fmt.Sprintf("%d", module.FanOutDep),
-			colorfulMetric(module.Abstractness()),
-			colorfulMetric(module.Instability()),
+			fmt.Sprintf("%.3f", module.Abstractness()),
+			fmt.Sprintf("%.3f", module.Instability()),
 			colorfulMetric(module.Distance()),
 		}
 
