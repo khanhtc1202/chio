@@ -1,9 +1,5 @@
 language: go
 go:
-    - 1.9.2
-before_install:
-    - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-install:
-    - make dep
+    - 1.12.9
 script:
     - make production
