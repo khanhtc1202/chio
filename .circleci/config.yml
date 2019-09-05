@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: golang:1.13.0-alpine
+      - image: golang:1.13.0
     steps:
       - run: |
           make ci
