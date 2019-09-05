@@ -8,16 +8,13 @@ LDFLAGS := -X 'main.revision=$(REVISION)' -X 'main.version=$(VERSION)' -X 'main.
 ENTRYPOINT := cmd/main.go
 REQUIRETESTPKG := pkg
 
-all: dep production
-
-dep:
-	dep ensure
+all: production
 
 # production mode: make [production | pro | p]
 production pro p: build-production test-production
 
 # development mode: make [development | develop | dev | d]
-development develop dev d: dep build-development
+development develop dev d: build-development
 
 # buid
 build-%:
@@ -29,7 +26,7 @@ test-%:
 	go test -tags="$* netgo" -count=1 ./$(REQUIRETESTPKG)
 
 update:
-	dep ensure -update
+	go mod tidy
 
 # publicing
 deploy:
