@@ -5,4 +5,4 @@ jobs:
       - image: golang:1.13.0
     steps:
       - run: |
-          make ci
+          make
