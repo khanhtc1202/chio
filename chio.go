@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 
 	"github.com/fatih/color"
@@ -50,7 +51,7 @@ func colorfulMetric(data float64) string {
 	return color.RedString("%.3f", data)
 }
 
-func print(srcPath string, modules pkg.Modules) {
+func printTable(srcPath string, modules pkg.Modules) {
 	var data [][]string
 
 	for _, module := range modules {
@@ -87,16 +88,18 @@ func main() {
 
 	modules, err := moduleFact.Load(language)
 	if err != nil {
-		fmt.Printf("Error: %s\n", err.Error())
-		os.Exit(1)
+		log.Fatalf("Error: %s\n", err.Error())
 	}
 
 	// loader object by language
 	loader := loaders.LoaderFactory(language)
 
 	// load modules
-	modules.Load(loader)
+	err = modules.Load(loader)
+	if err != nil {
+		log.Fatalf("Error: %s\n", err.Error())
+	}
 
 	// print output
-	print(srcPath, modules)
+	printTable(srcPath, modules)
 }
