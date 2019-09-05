@@ -3,8 +3,7 @@ jobs:
   build:
     docker:
       - image: golang:1.13.0
+    workDir: ~/chio
     steps:
-      - run: |
-          ls -lash
-          pwd
-          make
+      - checkout
+      - run: make ci
