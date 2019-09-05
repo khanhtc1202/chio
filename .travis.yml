@@ -2,4 +2,4 @@ language: go
 go:
     - 1.12.9
 script:
-    - make production
+    - make build

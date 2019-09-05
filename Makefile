@@ -10,6 +10,9 @@ REQUIRETESTPKG := pkg
 
 all: production
 
+build:
+	go build
+
 # production mode: make [production | pro | p]
 production pro p: build-production test-production
 
