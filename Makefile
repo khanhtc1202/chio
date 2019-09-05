@@ -10,8 +10,8 @@ REQUIRETESTPKG := pkg
 
 all: production
 
-build:
-	go build
+ci:
+	go run $(ENTRYPOINT)
 
 # production mode: make [production | pro | p]
 production pro p: build-production test-production
