@@ -2,9 +2,7 @@
 
 [![][goreportcard-svg]][goreportcard] 
 [![][CodeFactor]](https://www.codefactor.io/repository/github/khanhtc1202/chio)
-[![][Build Status]](https://travis-ci.org/khanhtc1202/chio)
 
-[Build Status]: https://travis-ci.org/khanhtc1202/chio.svg?branch=master
 [CodeFactor]: https://www.codefactor.io/repository/github/khanhtc1202/chio/badge
 [goreportcard]: https://goreportcard.com/report/github.com/khanhtc1202/chio
 [goreportcard-svg]: https://goreportcard.com/badge/github.com/khanhtc1202/chio
