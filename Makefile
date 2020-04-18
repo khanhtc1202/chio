@@ -31,9 +31,5 @@ test-%:
 update:
 	go mod tidy
 
-# publicing
-deploy:
-	mv ./bin/* ./public/
-
 install:
 	go install
